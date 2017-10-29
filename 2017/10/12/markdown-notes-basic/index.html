@@ -202,7 +202,7 @@
 
 
             </div>
-            <time class="red darken-4-link-context" datetime="2017-10-12T05:01:24.000Z"><a href="/2017/10/12/markdown-notes-basic/">2017-10-12</a></time>
+            <time class="black-link-context" datetime="2017-10-12T05:01:24.000Z"><a href="/2017/10/12/markdown-notes-basic/">2017-10-12</a></time>
 
             <span id="busuanzi_container_page_pv" class="read-times-container">
     <i class="fa fa-eye"></i>
@@ -212,17 +212,17 @@
             
     <div class="tags-row">
         
-            <a href="/tags/markdown/" class="chip orange lighten-1">-markdown</a>
+            <a href="/tags/markdown/" class="chip brown">-markdown</a>
         
     </div>
 
 
-            <div class="toc red darken-4-link-context hide-on-med-and-down">
+            <div class="toc black-link-context hide-on-med-and-down">
     <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#标题"><span class="section table-of-contents-text">标题</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#引用"><span class="section table-of-contents-text">引用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#列表"><span class="section table-of-contents-text">列表</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#代码块"><span class="section table-of-contents-text">代码块</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#链接"><span class="section table-of-contents-text">链接</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#图片"><span class="section table-of-contents-text">图片</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#强调"><span class="section table-of-contents-text">强调</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#分隔线"><span class="section table-of-contents-text">分隔线</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#删除线"><span class="section table-of-contents-text">删除线</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#表格"><span class="section table-of-contents-text">表格</span></a></li></ol>
 </div>
 
 
-            <div class="entry red darken-4-link-context">
+            <div class="entry black-link-context">
                 <p>用Markdown 编写文章时，常用的一些语法。</p>
 <a id="more"></a>
 <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>Markdown 支持两种标题的语法，Setext和类Atx格式。</p>
@@ -287,7 +287,7 @@
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">居中对齐 </div><div class="line">|:-----:|</div><div class="line">左对齐</div><div class="line">|:------|</div><div class="line">右对齐</div><div class="line">|------:|</div></pre></td></tr></table></figure>
 
                 
-<p class="red darken-4-link-context">
+<p class="black-link-context">
     <a href="/2017/10/12/Java-javac-grammar/" rel="next" title="Java 源文件的编译命令（javac 命令）">
     Prev: Java 源文件的编译命令（javac 命令）
   </a>
@@ -360,7 +360,7 @@
     </div>
     
 
-    <div class="footer-copyright red darken-4-link-context">
+    <div class="footer-copyright black-link-context">
         <div class="container">
             © 2017 elemtype.com, All rights reserved.
             <p class="right" style="margin-top: 0;">Blog powered by <a href="https://hexo.io">Hexo</a> | Theme <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
@@ -457,7 +457,7 @@
             $('li.tab a').hover(function() {
                 $(this).toggleClass('text-lighten-4');
             });
-            $('.indicator').addClass('orange lighten-1 lighten-2');
+            $('.indicator').addClass('brown lighten-2');
 
             
             // 添加new标签
@@ -536,7 +536,7 @@
                             if (isMatch) {
                                 keywords.forEach(function(keyword) {
                                     var regS = new RegExp(keyword, "gi");
-                                    data_title = data_title.replace(regS, "<span class=\"search-keyword red darken-4 lighten-2\">" + keyword + "</span>");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword black lighten-2\">" + keyword + "</span>");
                                 });
 
                                 str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
@@ -558,7 +558,7 @@
                                     // highlight all keywords
                                     keywords.forEach(function(keyword) {
                                         var regS = new RegExp(keyword, "gi");
-                                        match_content = match_content.replace(regS, "<span class=\"search-keyword red darken-4 lighten-2\">" + keyword + "</span>");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword black lighten-2\">" + keyword + "</span>");
                                     });
 
                                     str += "<p class=\"search-result\">..." + match_content + "...</p>"
