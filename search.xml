@@ -49,9 +49,8 @@
     <entry>
       <title><![CDATA[Linux 文件权限和目录配置]]></title>
       <url>/2017/10/29/LinuxFilePermissionAndConfiguration/</url>
-      <content type="html"><![CDATA[<p>Linux一般将文件可以存取访问的身份分为三个类别．分别是 <code>owner</code>,<code>group</code>,<code>others</code>.且３中身份各自有<code>read</code>.</p>
-<p><code>write</code>,<code>execute</code>,等权限．</p>
-<p>因此文件的权限管理就会变的很重要了．</p>
+      <content type="html"><![CDATA[<p>Linux一般将文件可以存取访问的身份分为三个类别．分别是 <code>owner</code>,<code>group</code>,<code>others</code>.且３中身份各自有<code>read</code>.<code>write</code>,<code>execute</code>,等权限．</p>
+<p>在Linux中文件的权限管理非常重要。</p>
 <a id="more"></a>
 <h2 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h2><h3 id="1-文件所有者-owner"><a href="#1-文件所有者-owner" class="headerlink" title="1.文件所有者　owner"></a>1.文件所有者　owner</h3><p>Linux是个多用户，多任务的系统，经常会有很多人来使用这台主机来进行操作，为了保护每个人的隐私和每个人喜好的工作环境．就必须确立文件所有者的角色．如果某个文件被某个用户设置成只有文件所有者才能够查看和修改这个文件的内容，他人就无法对这个文件进行查看和修改．　</p>
 <h3 id="2-用户组概念-group"><a href="#2-用户组概念-group" class="headerlink" title="2.用户组概念 group"></a>2.用户组概念 group</h3><p>配置文件所属的用户组，最有有用的功能就是，当进行团队开发资源的时候，每个组的成员之间互相对方的数据，而且其他组的成员不能够看到本组自己的文件内容．同时，每个帐号可以有多个用户组的支持，当然了在一个用户组里面也可以设置各自的权限，保留私人的空间．</p>
@@ -239,7 +238,7 @@
         
         <tags>
             
-            <tag> -Linux -command </tag>
+            <tag> -Linux </tag>
             
         </tags>
         
