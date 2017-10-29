@@ -1,0 +1,757 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Linux 文件权限和目录配置 | Li Jian&#39;s BOLG</title>
+    <meta name="author" content="Li Jian">
+    
+    <meta name="description" content="Linux一般将文件可以存取访问的身份分为三个类别．分别是 owner,group,others.且３中身份各自有read.
+write,execute,等权限．
+因此文件的权限管理就会变的很重要了．">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Linux 文件权限和目录配置"/>
+    <meta property="og:site_name" content="Li Jian&#39;s BLOG"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Li Jian&#39;s BLOG" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="red darken-4">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Li Jian&#39;s BLOG</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav pink darken-4" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://oykemr77k.bkt.clouddn.com/image/elemtype/jpg/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Li Jian</p>
+                        <p class="desc">大邪僧/日漫宅/</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav pink darken-4" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Other/">
+                    Other <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Java/">
+                    Java <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper red darken-4">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Linux/">-Linux</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Linux 文件权限和目录配置</h1>
+    
+
+
+            </div>
+            <time class="red-link-context" datetime="2017-10-29T02:49:23.000Z"><a href="/2017/10/29/LinuxFilePermissionAndConfiguration/">2017-10-29</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Linux-command/" class="chip brown">-Linux -command</a>
+        
+    </div>
+
+
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#用户和用户组"><span class="section table-of-contents-text">用户和用户组</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#1-文件所有者-owner"><span class="section table-of-contents-text">1.文件所有者　owner</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#2-用户组概念-group"><span class="section table-of-contents-text">2.用户组概念 group</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#3-其他人的概念-Others"><span class="section table-of-contents-text">3.其他人的概念　Others</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Liunx-用户身份和用户组记录的文件"><span class="section table-of-contents-text">Liunx 用户身份和用户组记录的文件</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Linux-文件权限"><span class="section table-of-contents-text">Linux 文件权限</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Linux-文件属性．"><span class="section table-of-contents-text">Linux 文件属性．</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#1-第一列表示了这个文件的类型和权限（permission）"><span class="section table-of-contents-text">1.第一列表示了这个文件的类型和权限（permission）</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#2-第二列表示有多少的文件名连接到此节点（i-node）．"><span class="section table-of-contents-text">2.第二列表示有多少的文件名连接到此节点（i-node）．</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#3-第三列表示这个文件或者目录的＂所有者帐号＂"><span class="section table-of-contents-text">3.第三列表示这个文件或者目录的＂所有者帐号＂</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#4-第四列表示这个文件或者目录的＂所属用户组＂"><span class="section table-of-contents-text">4.第四列表示这个文件或者目录的＂所属用户组＂</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#5-第五列表示这个文件的容量大小-默认单位为-“B”"><span class="section table-of-contents-text">5.第五列表示这个文件的容量大小, 默认单位为　“B”</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#6-第六列表示这个文件的创建日期或者是最近修改日期．"><span class="section table-of-contents-text">6.第六列表示这个文件的创建日期或者是最近修改日期．</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#7-第七列表示文件名"><span class="section table-of-contents-text">7.第七列表示文件名</span></a></li></ol></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Linux文件权限的重要性"><span class="section table-of-contents-text">Linux文件权限的重要性</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Linux文件属性和权限的修改"><span class="section table-of-contents-text">Linux文件属性和权限的修改</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#chgrp-改变文件所属的用户组"><span class="section table-of-contents-text">chgrp 改变文件所属的用户组</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#chown-改变文件的所有者"><span class="section table-of-contents-text">chown 改变文件的所有者</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#修改文件权限的意义："><span class="section table-of-contents-text">修改文件权限的意义：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#改变权限-chmod"><span class="section table-of-contents-text">改变权限　chmod</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#数字类型改变文件的权限："><span class="section table-of-contents-text">数字类型改变文件的权限：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#符号类型改变文件的权限"><span class="section table-of-contents-text">符号类型改变文件的权限</span></a></li></ol></li></ol></li></ol>
+</div>
+
+
+            <div class="entry red-link-context">
+                <p>Linux一般将文件可以存取访问的身份分为三个类别．分别是 <code>owner</code>,<code>group</code>,<code>others</code>.且３中身份各自有<code>read</code>.</p>
+<p><code>write</code>,<code>execute</code>,等权限．</p>
+<p>因此文件的权限管理就会变的很重要了．</p>
+<a id="more"></a>
+<h2 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h2><h3 id="1-文件所有者-owner"><a href="#1-文件所有者-owner" class="headerlink" title="1.文件所有者　owner"></a>1.文件所有者　owner</h3><p>Linux是个多用户，多任务的系统，经常会有很多人来使用这台主机来进行操作，为了保护每个人的隐私和每个人喜好的工作环境．就必须确立文件所有者的角色．如果某个文件被某个用户设置成只有文件所有者才能够查看和修改这个文件的内容，他人就无法对这个文件进行查看和修改．　</p>
+<h3 id="2-用户组概念-group"><a href="#2-用户组概念-group" class="headerlink" title="2.用户组概念 group"></a>2.用户组概念 group</h3><p>配置文件所属的用户组，最有有用的功能就是，当进行团队开发资源的时候，每个组的成员之间互相对方的数据，而且其他组的成员不能够看到本组自己的文件内容．同时，每个帐号可以有多个用户组的支持，当然了在一个用户组里面也可以设置各自的权限，保留私人的空间．</p>
+<h3 id="3-其他人的概念-Others"><a href="#3-其他人的概念-Others" class="headerlink" title="3.其他人的概念　Others"></a>3.其他人的概念　Others</h3><p>只有被拥有权限的用户授权才能够访问相应的文件．</p>
+<h3 id="Liunx-用户身份和用户组记录的文件"><a href="#Liunx-用户身份和用户组记录的文件" class="headerlink" title="Liunx 用户身份和用户组记录的文件"></a>Liunx 用户身份和用户组记录的文件</h3><p>在Liunx系统中，默认情况下所有的系统帐号与一般身份用户，还有root的相关信息，都是记录在 /etc/passwd这个文件内，至于个人的密码则是记录在 etc/shadow文件下．Liunx所有的祖名都记录在 /etc/group 内，这个３个文件可以说是Linux中帐号密码和用户组信息的集中地，不要随便删除这三个文件．</p>
+<h2 id="Linux-文件权限"><a href="#Linux-文件权限" class="headerlink" title="Linux 文件权限"></a>Linux 文件权限</h2><h3 id="Linux-文件属性．"><a href="#Linux-文件属性．" class="headerlink" title="Linux 文件属性．"></a>Linux 文件属性．</h3><p>要了解Linux的文件属性，一个常用的命令，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls</div></pre></td></tr></table></figure>
+<p>ls 是list 的意思，终点显示文件的文件名与相关属性.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls -al</div></pre></td></tr></table></figure>
+<p><code>-al</code>表示列出所有的文件详细的权限和属性（包含隐藏文件，也就是文件名第一个字符为 <code>.</code>的文件．</p>
+<p>以root运行上述的命令后，得到的输出类似．</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">drwxr-xr-x  3 zero zero 4096 9月  29 18:24 下载</div></pre></td></tr></table></figure>
+<p>这是关于下载文件的信息．　</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">drwxr-xr-x[文件权限] 3[连接数]　zero[文件所有者]　zero[文件所属用户组] 4096[文件大小] 9月 29 18:24［文件最后被修改时间］　下载[文件名]</div></pre></td></tr></table></figure>
+<h4 id="1-第一列表示了这个文件的类型和权限（permission）"><a href="#1-第一列表示了这个文件的类型和权限（permission）" class="headerlink" title="1.第一列表示了这个文件的类型和权限（permission）"></a>1.第一列表示了这个文件的类型和权限（permission）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">drwxr-xr-x　　d[文件类型] rwx［文件所有者的权限］r-x[文件所属用户组的权限]　r-x [其他人对此文件的权限．]</div></pre></td></tr></table></figure>
+<p>仔细看的话就会发现其中一共有10个字符．</p>
+<p>第一个字符表示的是文件的类型．表示这个文件是目录，文件或者是链接文件等．</p>
+<table>
+<thead>
+<tr>
+<th>字符</th>
+<th>文件类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>d</td>
+<td>目录</td>
+</tr>
+<tr>
+<td>-</td>
+<td>文件</td>
+</tr>
+<tr>
+<td>l</td>
+<td>表示为连接文件[linkfile]</td>
+</tr>
+<tr>
+<td>b</td>
+<td>设备文件里面的可供存储的接口设备．</td>
+</tr>
+<tr>
+<td>c</td>
+<td>设备文件内的串行端口设备，例如鼠标，键盘，（一次性存储设备）</td>
+</tr>
+</tbody>
+</table>
+<p>接下来的字符，３个一组，分别表示文件所有者（owner）,文件所属用户组(group),其他非本组用户（Others)的权限．[r]表示的可读[read],［w］表示可写[write] ［x］表示可执行[execute].</p>
+<p>注意到，rwx所在的位置是不会变的，有权限表示为相应的字符，没有权限用[-]表示．</p>
+<blockquote>
+<p>需要注意的是，目录和文件的权限意义并不相同，这是因此目录和文件记录的数据内容不同所致．</p>
+</blockquote>
+<h4 id="2-第二列表示有多少的文件名连接到此节点（i-node）．"><a href="#2-第二列表示有多少的文件名连接到此节点（i-node）．" class="headerlink" title="2.第二列表示有多少的文件名连接到此节点（i-node）．"></a>2.第二列表示有多少的文件名连接到此节点（i-node）．</h4><p>每个文件都会将自己的权限和属性记录到文件系统的 i-node 中，不过我们使用的目录树使用文件名来记录，</p>
+<p>因此每个文件名会连接到一个 i-code ,这个属性记录就是有多少个文件名连接到同一个 i-node 号码．</p>
+<h4 id="3-第三列表示这个文件或者目录的＂所有者帐号＂"><a href="#3-第三列表示这个文件或者目录的＂所有者帐号＂" class="headerlink" title="3.第三列表示这个文件或者目录的＂所有者帐号＂"></a>3.第三列表示这个文件或者目录的＂所有者帐号＂</h4><h4 id="4-第四列表示这个文件或者目录的＂所属用户组＂"><a href="#4-第四列表示这个文件或者目录的＂所属用户组＂" class="headerlink" title="4.第四列表示这个文件或者目录的＂所属用户组＂"></a>4.第四列表示这个文件或者目录的＂所属用户组＂</h4><h4 id="5-第五列表示这个文件的容量大小-默认单位为-“B”"><a href="#5-第五列表示这个文件的容量大小-默认单位为-“B”" class="headerlink" title="5.第五列表示这个文件的容量大小, 默认单位为　“B”"></a>5.第五列表示这个文件的容量大小, 默认单位为　“B”</h4><h4 id="6-第六列表示这个文件的创建日期或者是最近修改日期．"><a href="#6-第六列表示这个文件的创建日期或者是最近修改日期．" class="headerlink" title="6.第六列表示这个文件的创建日期或者是最近修改日期．"></a>6.第六列表示这个文件的创建日期或者是最近修改日期．</h4><h4 id="7-第七列表示文件名"><a href="#7-第七列表示文件名" class="headerlink" title="7.第七列表示文件名"></a>7.第七列表示文件名</h4><h2 id="Linux文件权限的重要性"><a href="#Linux文件权限的重要性" class="headerlink" title="Linux文件权限的重要性"></a>Linux文件权限的重要性</h2><p>Linux增加了各种文件的权限，最终的用途在于＂数据安全性＂上．</p>
+<p>１．系统保护的功能．</p>
+<p>２．团队开发或者数据共享的功能．</p>
+<p>３．为将权限设置妥当的危害（文件被没有权限的人修改，损害）</p>
+<h2 id="Linux文件属性和权限的修改"><a href="#Linux文件属性和权限的修改" class="headerlink" title="Linux文件属性和权限的修改"></a>Linux文件属性和权限的修改</h2><p>用于用户组，所有者，各种身份的权限的修改的命令：</p>
+<blockquote>
+<p>chgrp : (change group )改变文件所属的用户组</p>
+<p>chown: (change owner)改变文件所有者．</p>
+<p>chmod : (change model) 改变文件的权限</p>
+</blockquote>
+<h3 id="chgrp-改变文件所属的用户组"><a href="#chgrp-改变文件所属的用户组" class="headerlink" title="chgrp 改变文件所属的用户组"></a>chgrp 改变文件所属的用户组</h3><blockquote>
+<p>注意的是　chgrp　该变的用户组必须是在 /etc/group 文件内存在．</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chgrp [-R]   组名  dirname/filename ...</div><div class="line">[-R]: 并行递归的持续更改，即连同目录下的所有文件目录一起修改．</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls　-l /home/zero/README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rw-rw-r-- 1 zero zero 629 10月 17 13:03 README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chgrp lijian /home/zero/README.txt</div></pre></td></tr></table></figure>
+<p>查看文件属性：　</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls  -l README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rw-rw-r-- 1 zero lijian 629 10月 17 13:03 README.txt</div></pre></td></tr></table></figure>
+<h2 id="chown-改变文件的所有者"><a href="#chown-改变文件的所有者" class="headerlink" title="chown 改变文件的所有者"></a>chown 改变文件的所有者</h2><blockquote>
+<p>注意的是　chown　该变的用户组必须是在 /etc/group 文件内存在</p>
+</blockquote>
+<p>语法和范例：　</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown [-R] 帐号名称　文件或者目录</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls　-l /home/zero/README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rw-rw-r-- 1 zero lijian 629 10月 17 13:03 README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown lijian README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls  -l README.txt</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rw-rw-r-- 1 lijian lijian 629 10月 17 13:03 README.txt</div></pre></td></tr></table></figure>
+<p>另一种语法和范例：同时修改用户组和所有者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown [-R] 所有者名:用户组名 文件或者目录</div></pre></td></tr></table></figure>
+<h3 id="修改文件权限的意义："><a href="#修改文件权限的意义：" class="headerlink" title="修改文件权限的意义："></a>修改文件权限的意义：</h3><p>最常见的需要修改所有者的例子就是复制文件给你之外的其他人时，使用最简单的<code>cp</code>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp 源文件　目标文件</div></pre></td></tr></table></figure>
+<p>假设要将 test 这个文件复制为 test_copy　文件名，并且要给　lijian　这个人，可以这样做． </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp test test_copy</div><div class="line">ls -al test*</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-rw-rw-r-- 1 zero zero 0 10月 24 23:08 test</div><div class="line">-rw-rw-r-- 1 zero zero 0 10月 24 23:08 test_copy</div></pre></td></tr></table></figure>
+<p>cp命令会复制执行者的属性和权限，test_copy 还是归 zero:zero 所有</p>
+<p>即使你将这个文件给了 lijian 这个用户，它也无法修改．</p>
+<p>这个时候就要修改文件的所有者和用户组．</p>
+<h3 id="改变权限-chmod"><a href="#改变权限-chmod" class="headerlink" title="改变权限　chmod"></a>改变权限　chmod</h3><p>权限的设置方法有两种，可以通过数字或者符号的方式进行修改．</p>
+<h4 id="数字类型改变文件的权限："><a href="#数字类型改变文件的权限：" class="headerlink" title="数字类型改变文件的权限："></a>数字类型改变文件的权限：</h4><p>我们已经知道，文件的基本权限一共有９个，分别是　owner, group ,others,三种身份的 read write,execute权限．文件的权限字符为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-rwxrwxrwx -[owner][group][others]</div></pre></td></tr></table></figure>
+<p>每三个权限为一组．</p>
+<p>各自的分数对照表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">r : 4        w: 2      r:1</div></pre></td></tr></table></figure>
+<p>使用的时候，将每个身份的权限分数进行累加．例如：<code>-rwxr---rx</code>的权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">owner = 4+2+1 = 7</div><div class="line">group = 4 </div><div class="line">others = 2+1 =3</div></pre></td></tr></table></figure>
+<p>所以当我们修改权限的时候，该权限的权限数字为 743 .</p>
+<p>更改权限的<code>chmod</code>命令的格式是这样的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod [-R] xyz 文件或目录</div></pre></td></tr></table></figure>
+<p>-R : 递归迭代命令。使用该命令，目录及其子文件所有的权限都会备更改。</p>
+<p>xyz: 文件的权限分数。</p>
+<p>例如;将上文的文件的所有属性都启用：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chomd -R 777 fileName</div></pre></td></tr></table></figure>
+<p>或者你不希望文件被人看到，可以设置成对除了自己外都不可见。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chomd 700 fileName</div></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的，root用户具有所有的权限，以上设置对root用户没有任何影响。</p>
+</blockquote>
+<h4 id="符号类型改变文件的权限"><a href="#符号类型改变文件的权限" class="headerlink" title="符号类型改变文件的权限"></a>符号类型改变文件的权限</h4><p>符号类型中，我们使用 <code>u g o</code>分别代表　owner , group ,others 三种用户身份．</p>
+<p>｀a｀用来表示所有的身份（all）读写操作的权限可以表示为 <code>r  w  x</code></p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u</td>
+<td>owner</td>
+</tr>
+<tr>
+<td>g</td>
+<td>group</td>
+</tr>
+<tr>
+<td>o</td>
+<td>others</td>
+</tr>
+<tr>
+<td>a</td>
+<td>all [owner,group,others]</td>
+</tr>
+<tr>
+<td>r</td>
+<td>read</td>
+</tr>
+<tr>
+<td>w</td>
+<td>write</td>
+</tr>
+<tr>
+<td>e</td>
+<td>excute</td>
+</tr>
+<tr>
+<td>+</td>
+<td>添加权限</td>
+</tr>
+<tr>
+<td>-</td>
+<td>去掉权限</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>使用 <code>=</code>进行权限的设置</p>
+</blockquote>
+<p>例如，我们想要设置一个文件的权限为 -rwxr-xr-x 时，可以写成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod u=rwx,go=rx fileName</div></pre></td></tr></table></figure>
+<p>如果我们不清楚具体的权限，想要让所有人具有可读权限的时候，可以简单设置为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod a+r fileName</div></pre></td></tr></table></figure>
+<p>同样去掉可执行权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod a-x fileName</div></pre></td></tr></table></figure>
+<p>当然了，<code>-</code> <code>+</code>也可以引用于单个用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod g+w fileName</div></pre></td></tr></table></figure>
+<p>这样就为 group 用户增加来可写入的权限了．</p>
+<hr>
+<p>以上内容仅仅作为参考用，作者不保证绝对不出现差错，如果想知道更加具体的内容请查看官方的文档．</p>
+
+                
+<p class="red-link-context">
+    <a href="/2017/10/29/Words/" rel="next" title="Words">
+    上一篇：Words
+  </a>
+</p>
+
+
+
+<p class="red-link-context">
+    <a href="/2017/10/28/hello-world/" rel="next" title="Hello World">
+    下一篇：Hello World
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large red darken-4">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect pink darken-4" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse prange lighten-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer red darken-4 darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/eachannlee" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright red-link-context">
+        <div class="container">
+            © 2017 elemtype.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('brown lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge red darken-4"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
