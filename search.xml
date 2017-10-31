@@ -3,6 +3,148 @@
   
     
     <entry>
+      <title><![CDATA[简单UML类图绘制]]></title>
+      <url>/2017/10/31/ClassDiagram/</url>
+      <content type="html"><![CDATA[<h1 id="简单的UML类图绘制"><a href="#简单的UML类图绘制" class="headerlink" title="简单的UML类图绘制"></a>简单的UML类图绘制</h1><p>UML 2.0 的所有图形中，类图（Class diagram）是使用频率最高的UML图之一。至少笔者接触到的所有UML图中，绝大多数都是类图。类图是用于描述系统中包含的类以及他们之间的相互关系，帮助人们简化对系统的理解。也是系统编码和测试的重要依据。本文以 Java 语言为基础，来简述类图的一些简单的绘制方法。</p>
+<a id="more"></a>
+<blockquote>
+<p>需要说明是：本文中引用的部分图片使用eclipse插件生成，一些图标可能和描述的不同，图片仅仅用于演示关键部分。 请以具体说明为准，</p>
+</blockquote>
+<h2 id="类的UML图示"><a href="#类的UML图示" class="headerlink" title="类的UML图示"></a>类的UML图示</h2><p>我们说，类是封装了数据和行为，是具有相同属性，操作，关系的对象集合的总称。是面向对象的重要组成部分。</p>
+<p>UML中，类使用包含 <code>类名``属性``操作</code>的使用带有分隔线的方框来表示。</p>
+<p>所以在类图中，类由三部分组成：</p>
+<p>1.第一部分是类名，是一个 字符串。</p>
+<p>2.第二部分是类的属性（成员变量）一个类可以有任意多个属性，也可以没有属性。</p>
+<p>UML中的表示方式：</p>
+<blockquote>
+<p>​    &lt;可见性&gt; &lt;名称&gt; : &lt;类型&gt; [= 缺省值]</p>
+</blockquote>
+<p>缺省值是一个可选项，即属性的初始值。</p>
+<p>3.第三部分是类的操作，即类的成员方法。</p>
+<p>UML中的表示方式：</p>
+<blockquote>
+<p>  &lt;可见性&gt; &lt;名称&gt;   (参数列表)         [: 返回类型]</p>
+</blockquote>
+<p>参数列表表示方法的参数，参数的个数是任意的，多个参数之间用逗号隔开。</p>
+<p>返回类型是一个可选项，取决于编程语言的实现，可以是基本类型，可以是用户自定义类型，也可以是 （void） 空类型，如果是构造方法，则无返回类型。</p>
+<p>##可见性</p>
+<p>属性或者操作的可见性定义相同。</p>
+<p>可见性表示该属性对于类外的元素而言是否可见(及访问权限)。主要包括：</p>
+<p><code>public</code>  <code>private</code>  <code>protected</code>  三种，分别用 <code>+</code>  <code>-</code>  <code>#</code> 表示。</p>
+<p>默认包访问权限不用表示。</p>
+<h4 id="一个简单的类UML表示："><a href="#一个简单的类UML表示：" class="headerlink" title="一个简单的类UML表示："></a>一个简单的类UML表示：</h4><p>假设有一个类： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> String name ;</div><div class="line">  	<span class="keyword">private</span> <span class="keyword">int</span> age ;</div><div class="line">  	<span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name, <span class="keyword">int</span> age)</span></span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name ;</div><div class="line">      	 <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line">  	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> name;&#125;</div><div class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;<span class="keyword">this</span>.age= age;  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它的UML图可以表示为：</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/classdiagram1.png" alt="classdiagram1"></p>
+<h2 id="类与类之间的关系"><a href="#类与类之间的关系" class="headerlink" title="类与类之间的关系"></a>类与类之间的关系</h2><p>类并不是孤立存在的，类与类之间存在着不同的关系，UML对此提供了不同的表示方法：</p>
+<p>##类之间的关系–关联关系</p>
+<p>关联关系（Association）用于表示一类对象和另一类对象有联系。在UML类图中，用实线连接关联关系的对象所对应的类UML.</p>
+<p>Java，或者c++等编程语言实现关联关系，通常是一个类的对象作为另一个类的成员变量。</p>
+<p>UML类图表示关联关系的时候，可以在关联关系上标注角色名（一般使用表示两者之间关系的动词或者名词表示角色名），不是必须的， 但是可以使类与类之间的关系更加的明确。</p>
+<p>类如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JFrame</span></span>&#123;</div><div class="line">	<span class="keyword">private</span> JTextArea textArea;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JButton</span></span>&#123;&#125;</div></pre></td></tr></table></figure>
+<p>在一个框架 JFrame 中包含了一个文本域 JTextArea 类型的对象。他们两者的关系可以用UML表示为：</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram4.png" alt="2"></p>
+<p>####关联分为 单向关联和双向关联自关联，多重性关联，聚合关系等。</p>
+<p><strong>单向关联</strong>一般来说都是一种包含或者被包含的关系，类似于上文所述的框架中包含了文本域，使用带有箭头的实线表示，箭头指向被包含的类。</p>
+<p><strong>双向关联</strong>，默认情况下，关联是双向的，例如顾客买了一堆商品并且拥有了这些上平，而对于商品来说，被卖出去的商品一定和购买它的顾客有联系。</p>
+<p>双向关联使用不带箭头的实线表示。</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram5.png" alt="5"></p>
+<p><strong>自关联</strong> 在一些系统中，有些累的属性对象可能是自身，这种关联关系就称之为自关联关系。</p>
+<p><strong>多重性关联</strong> 表示两个关联对象之间在数量上的对应关系，例如一个框架中可能含有多个文本域，一个顾客买了多个商品。多重关联可以是单向的，也可以是双向的。对象之间可一存在多重的关联关系，常见的关联方式如下表：</p>
+<table>
+<thead>
+<tr>
+<th>表示</th>
+<th>多重性关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1..1</td>
+<td>表示另一个类的对象只和该类的一个对象有关。</td>
+</tr>
+<tr>
+<td>0…*</td>
+<td>表示另一个类的对象只和该类的0个或者多个对象有关。</td>
+</tr>
+<tr>
+<td>1…*</td>
+<td>表示另一个类的对象只和该类的一个对象有关。</td>
+</tr>
+<tr>
+<td>0…1</td>
+<td>表示另一个类的对象只与该类的0个或者1个对象有关</td>
+</tr>
+<tr>
+<td>m…n</td>
+<td>表示另一个类的一个对象，置于该类最少m个，最多n个对象有关</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>需要个别注意的是，上述的表示形容的是另一个类的对象和本对象的关系。</p>
+<p>例如： 一个框架可以有0个或者多个文本域，但是一个文本域只能够属于一个界面，</p>
+<p>对框架对象而言，文本域（另一个类的对象）的一个对象只与该框架的一个对象有关系。</p>
+<p>对文本域而言，一个框架（另一个类的对象）可以有0个或者多个的文本域，</p>
+<p>因此，两者之间的关系可以表示为</p>
+</blockquote>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram2.png" alt="3"></p>
+<p><strong>聚合关系</strong></p>
+<p>聚合关系表示的是整体与部分的关系，即聚合关系中，成员变量是整体对象的一部分。但是，成员变量可以脱离实体而单独存在，在UML聚合关系通常会使用空心菱形的实线表示。例如 ：车轮是汽车的组成部分，车轮又可以单独存在，因此汽车和车轮是聚合关系。空心菱形在聚合者一边（汽车一边）</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram6.png" alt="7"></p>
+<p><strong>组合关系</strong></p>
+<p>组合关系和聚合关系比较容易混淆，他们也是整体和部分的关系，但是，组合关系中，整体对象可以控制成员对象的生命周期（整体对象不存在，成员变量也就不存在,两者之间存在着明显的共生关系）</p>
+<p>就说一个人的头部和人自身就是一种组合关系，人由头部和其他器官组合而成，如果没有人，那么头部也就不复存在。而汽车的轮子则不同，即便是没有汽车，轮子也可以独立的存在。因此，人和头部是一中组合关系，而汽车和轮子是聚合关系。</p>
+<p>组合关系使用实心的菱形实线表示，实心菱形在组合者(人)一边.</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram7.png" alt="8"></p>
+<h2 id="类之间的关系–依赖关系"><a href="#类之间的关系–依赖关系" class="headerlink" title="类之间的关系–依赖关系"></a>类之间的关系–依赖关系</h2><p>依赖关系是一种使用关系，特定事务的改变可以影响到该事务的其他事物，表示一个事物使用另一个事物时使用一来关系。</p>
+<p>绝大多数情况下，依赖关系体现在一个类的方法会使用另一个类作为在参数。</p>
+<p>在UML中，使用带箭头的虚线表示一来关系，依赖的一方指向被依赖的一方。</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram8.png" alt="9"></p>
+<p>比如一个人想要开车，这个人的 driver(Car car) 方法，就依赖于具体的车的使用方法，比如自动挡或者是手动挡，车的使用方法决定了这个人开车的方式。因此这个人的driver()方法，依赖于车的使用方法。 </p>
+<p>在实际的程序中，体现依赖关系的方式大概有这几种：</p>
+<p>​    第一种也是最常用的一种方式类似于上述的车和驾车人的关系，就是一个类法方法中需要使用另外一个类的方法或者使用其静态方法。。</p>
+<p>​    第二种是在一个类的方法中将另外一个类的对象作为其局部变量。</p>
+<h2 id="类之间的关系–继承（泛化）关系"><a href="#类之间的关系–继承（泛化）关系" class="headerlink" title="类之间的关系–继承（泛化）关系"></a>类之间的关系–继承（泛化）关系</h2><p>泛化（Generalization）关系就是继承关系，用于描述子类和父类的关系，父类又被称为是基类或者是超类，具体的细节在类似于Java这样的面向对象语言中已经有了非常详细的描述,不同语言的实现方式有些与不同，类似于Java不支持多重继承，C++支持多重继承之类，可以视具体情况而定。</p>
+<p>在UML中，继承关系使用带有空心箭头的实线表示。箭头指向父类。这样做的意义在于，在一个类中，子类一定知道它的父类是谁，而父类不一定知道它的子类是谁。</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/classdiagram10.png" alt="45"></p>
+<p>而类图的描述使，一般父类要求带有其拥有的所有属性和操作，而子类只需要表示出和父类不同的扩展内容即可。</p>
+<h2 id="类之间的关系–接口与实现关系"><a href="#类之间的关系–接口与实现关系" class="headerlink" title="类之间的关系–接口与实现关系"></a>类之间的关系–接口与实现关系</h2><p>面向对象中引入了接口的概念，它没有属性，所有的操作都是抽象的，只进行声明不做任何的实现。UML中使用和类类似的方法表示接口。理论上将所有的接口名，抽象方法，抽象类，都应该用斜体表示。在java中可以使用&lt;<interface>&gt;表示接口。</interface></p>
+<p>接口和实现类之间使用空心箭头的虚线表示，和继承关系一样，箭头指向接口，表示实现类可以知道自己所实现的接口，而接口不一定知道自己的实现类。</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram45.png" alt="67"></p>
+<h1 id="书写规则补充"><a href="#书写规则补充" class="headerlink" title="书写规则补充"></a>书写规则补充</h1><p>需要注意的是，在UML类图中，所有的静态成员（操作（方法），属性（成员变量））都要在名称上加下划线。</p>
+<p>所有的抽象类，抽象方法，接口，以斜体表示。（Java中表示接口可以在接口名上加&lt;<interface>&gt;表示接口）。</interface></p>
+<p>接口的还有一种写法是在接口上添加一个带小圆圈的实线表示。</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram56.png" alt=""></p>
+<p>以上的书写规则仅仅适用于书写，如果采用软件生成UML,则生成的图像会有各自不同的表示方法，（大体都一样），使用上述软件的时，要视情况的而定。</p>
+<h3 id="推荐一个生成UML-的eclipse插件"><a href="#推荐一个生成UML-的eclipse插件" class="headerlink" title="推荐一个生成UML 的eclipse插件"></a>推荐一个生成UML 的eclipse插件</h3><p><a href="http://takezoe.github.io/amateras-update-site/" target="_blank" rel="external">Amateras Modeler</a> </p>
+<p>一个非常优秀而且简便易用的插件，点击插件名可以进入项目网站，从其中复制URL，使用 eclipse 安装。</p>
+<p>具体安装步骤为： eclipse &gt;&gt;help&gt;&gt;install more software&gt;&gt;添加链接搜索下载即可。</p>
+<p>当然也可以直接使用下面的URL复制粘贴，不过，由于可能出现更新版本的产品，推荐到官方页面去寻找链接。</p>
+<p>URL : <a href="http://takezoe.github.io/amateras-update-site/" target="_blank" rel="external">http://takezoe.github.io/amateras-update-site/</a></p>
+<p>！注意在安装Amateras Modeler 之前要先行安装 GEF 插件，该插件可以到<a href="eclipse.org">eclipse</a>官网的项目（projects）栏目下输入GEF搜索，找到链接以同样的方式下载安装即可。</p>
+<p>GEF安装地址： (可能失效)<a href="http://download.eclipse.org/tools/gef/updates/releases" target="_blank" rel="external">http://download.eclipse.org/tools/gef/updates/releases</a></p>
+<p>利用Amateras Modeler 生成的一个类图示例：</p>
+<p><img src="http://oykemr77k.bkt.clouddn.com/image/elemtype/png/classdiagram.png" alt="345"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> -Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -uml </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[资源推荐]]></title>
       <url>/2017/10/29/amway/</url>
       <content type="html"><![CDATA[<p>Exciting works! Try to understand them, and will be amazed by their charms.</p>
