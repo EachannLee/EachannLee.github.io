@@ -3,6 +3,124 @@
   
     
     <entry>
+      <title><![CDATA[Java 简单的图形界面设计]]></title>
+      <url>/2017/11/02/SimpleJavaUI/</url>
+      <content type="html"><![CDATA[<h1 id="Java简单的图形界面设计"><a href="#Java简单的图形界面设计" class="headerlink" title="Java简单的图形界面设计"></a>Java简单的图形界面设计</h1><p>Java图形设计图像界面的主要元素由图形用户界面工具包 Swing 提供。 </p>
+<p>包括了界面组件，事件处理模型，图形和图像工具、布局管理器等。它们主要都在 javax.swing 包内。 Swing 是Java标准包的一部分，它为大规模的GUI界面开发提供了丰富的基础结构。 </p>
+<a id="more"></a>
+<h2 id="Swing-组件的简单分类"><a href="#Swing-组件的简单分类" class="headerlink" title="Swing 组件的简单分类"></a>Swing 组件的简单分类</h2><p>Java 语言中构成 GUI 的元素可以称为是组件（Component）。构建GUI的类可以分为三类：</p>
+<ol>
+<li>容器类 Container </li>
+<li>组件类 Component </li>
+<li>辅助类 Helper</li>
+</ol>
+<h4 id="容器类："><a href="#容器类：" class="headerlink" title="容器类："></a>容器类：</h4><p>这里的容器类指的是容器类的组件。 是可以用来包含其他组件的类。</p>
+<p>容器类可以分成 顶层容器和非顶层容器。</p>
+<p>顶层容器类可以独立的存在。而且大都含有边框，可以移动、放大、缩小、关闭的功能性较强的容器</p>
+<p> Java中的顶层容器主要有</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JFrame</div><div class="line">JApplet</div><div class="line">JDialog</div></pre></td></tr></table></figure>
+<p>非顶层容器不能够单独的存在。它们必须放入窗口之内才可以显示。并且可以拥有自己的布局管理器。</p>
+<p>Java中的非顶层容器有</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">JPanel</div><div class="line">JScrollPane</div><div class="line">JToolBar</div></pre></td></tr></table></figure>
+<h4 id="组件类"><a href="#组件类" class="headerlink" title="组件类"></a>组件类</h4><p>Component 类是所有组件类的父类，（顶层容器除外）</p>
+<p>所有的 Swing GUI 组件类都是抽象类 JComponent 类的子类。（顶层容器除外）</p>
+<p>具体组件类的大致结构在后文会有介绍。</p>
+<h4 id="辅助类"><a href="#辅助类" class="headerlink" title="辅助类"></a>辅助类</h4><p>辅助类是有用来描述组件的属性的，例如有： 绘图类（Graphics )颜色类（Color）字体类（Font）字体属性类（FontMetrics）布局管理器类（LayoutManager）.</p>
+<p>需要注意的是，辅助类不是 Component的子类，通常包含在 java.awt 包中。</p>
+<h2 id="Swing-容器的层次关系"><a href="#Swing-容器的层次关系" class="headerlink" title="Swing 容器的层次关系"></a>Swing 容器的层次关系</h2><p>一般的 Swing 窗口实际上包括了多个层次，各个此处呢个分别是：</p>
+<ol>
+<li>顶层容器 ：JFrame</li>
+<li>根窗格</li>
+<li>分层窗格</li>
+<li>内容窗格</li>
+<li>玻璃窗格</li>
+</ol>
+<h4 id="顶层容器-Top-Lever-Container"><a href="#顶层容器-Top-Lever-Container" class="headerlink" title="顶层容器 Top Lever Container"></a>顶层容器 Top Lever Container</h4><p>顶层容器是一个窗口容器对象，该对象中包含了 Swing窗口中的各个层次。</p>
+<p>在该对象里可以加入其他的窗口对象。常见的顶层容器有 ： JFrame , JApplet ,JDialog 等</p>
+<h4 id="根窗格-Root-Pane"><a href="#根窗格-Root-Pane" class="headerlink" title="根窗格 Root Pane"></a>根窗格 Root Pane</h4><p>根窗格是在创建顶层的容器后自动创建的 ，供 Swing 顶层容器在后台使用。它是顶层容器中包含的最内层。通常无法在这一层上做任何的操作和处理。</p>
+<h4 id="分层窗格-Layered-Pane"><a href="#分层窗格-Layered-Pane" class="headerlink" title="分层窗格 Layered Pane"></a>分层窗格 Layered Pane</h4><p>分层窗格中的组件可以设置其图层层次，而且不会被内容窗格中的对象屏蔽。</p>
+<p>在分层窗格中的对象还可以设置其层次高低，层次较高的对象和层次较低的对象重叠是，层次低的会被屏蔽。这一层主要用来管理<strong>菜单栏和内容窗格</strong>，菜单栏时可选的。若没有内容，窗格就会充满整个顶层窗格</p>
+<h4 id="内容窗格-Content-Pane"><a href="#内容窗格-Content-Pane" class="headerlink" title="内容窗格 Content Pane"></a>内容窗格 Content Pane</h4><p>内容窗格是 Container 类的一个实例，默认状态下是一个具有 <code>BorderLayout</code>布局管理器的 JPanel 对象，大部分的可见组件都可以放在其中，想要获取 JFrame 或者是 JApplet 中的内容窗格，使用 <code>getContentPane()</code>方法来获取。然后使用<code>add()</code>方法将内容加入到这一个层次中。</p>
+<h4 id="玻璃窗格"><a href="#玻璃窗格" class="headerlink" title="玻璃窗格"></a>玻璃窗格</h4><p>玻璃窗格主要是用来产生绘图效果，以及触发程序的各种事件，玻璃窗格浮在最上面，默然情况下是隐藏的，如果玻璃窗格可见，那么，它就像是放在根窗格所有其他部分上的一块玻璃，除非实现玻璃窗格的 <code>paint()</code>方法做一些事情。否则它是完全透明的。</p>
+<p>####一般来说，根窗格，分层窗格，玻璃窗格都不会直接使用。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> -Java </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Swing </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[JavaThread_1]]></title>
+      <url>/2017/11/02/JavaThread-1/</url>
+      <content type="html"><![CDATA[<a id="more"></a>]]></content>
+      
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[常用的SQL 命令]]></title>
+      <url>/2017/11/02/SQLSimpleIntroductiion/</url>
+      <content type="html"><![CDATA[<h1 id="SQL命令"><a href="#SQL命令" class="headerlink" title="SQL命令"></a>SQL命令</h1><p>常用的 SQL 命令。</p>
+<a id="more"></a>
+<p>所有的 SQL 操作均在 SQL Server 上执行，和 SQL 标准可能有些许的不兼容，更为详细的资料可以查看 W3cSchool的相关文档。</p>
+<h2 id="用户操作与数据控制"><a href="#用户操作与数据控制" class="headerlink" title="用户操作与数据控制"></a>用户操作与数据控制</h2><h3 id="使用-SQL-语句创建用户"><a href="#使用-SQL-语句创建用户" class="headerlink" title="使用 SQL 语句创建用户"></a>使用 SQL 语句创建用户</h3><h4 id="1-创建登录名"><a href="#1-创建登录名" class="headerlink" title="1.创建登录名"></a>1.创建登录名</h4><blockquote>
+<p>格式： create login <loginname> with password = ‘passwordNumber’ ;</loginname></p>
+</blockquote>
+<p>其中： LoginName 是用于登录服务器的用户名，PasswordNumber： 是用户名登录的密码。在 SQL Server 服务器的 《安全性》下的《登录名》，可以看到创建的用户。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> login  王明 <span class="keyword">with</span> <span class="keyword">password</span> = <span class="string">'123456'</span>;</div><div class="line"><span class="keyword">create</span> login  李刚 <span class="keyword">with</span> <span class="keyword">password</span> = <span class="string">'456789'</span>;</div></pre></td></tr></table></figure>
+<h4 id="2-创建数据库用户"><a href="#2-创建数据库用户" class="headerlink" title="2.创建数据库用户"></a>2.创建数据库用户</h4><p>用户登录服务器后，要进入某一个数据库访问，就需要为登录用户在该数据库中建立 一个数据库用户名。</p>
+<blockquote>
+<p>格式： create user <username> for Login <loginname> ;</loginname></username></p>
+</blockquote>
+<p>需要注意的是创建数据库用户名之前一定要切换到当前的数据库。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> DateBase1; <span class="comment">--切换到当前用户</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">user</span> 王明 <span class="keyword">for</span> login 王明 ;</div><div class="line"><span class="keyword">create</span> <span class="keyword">user</span> 李刚 <span class="keyword">for</span> login 李刚 ;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>数据库用户和登录账户名可以不同，但是为了便于记忆，可以设置成相同的名字。</p>
+</blockquote>
+<h4 id="3-授权"><a href="#3-授权" class="headerlink" title="3.授权"></a>3.授权</h4><p>在数据库中添加新用户之后，新用户没有访问数据库中数据的权限，需要数据库管理人员授予相应的权限后，才能够执行新的操作。</p>
+<blockquote>
+<p>格式： grant &lt;权限&gt; [,&lt;权限&gt;…] on &lt;对象名&gt; to &lt;用户&gt; [,&lt;用户&gt;..]</p>
+<p>[with grant option ];</p>
+</blockquote>
+<p>注意的是，在SQL  server 中，on 之后只能够有一个类型。</p>
+<p><code>with grant option</code>  是一个可选操作，授予权限的时候如果加上了该子句，那么获得权限的用户还可以把权限给予其他的用户。如果没有的话，那么就只能够使用该权限，不能够传播权限。</p>
+<p>例如： 授予李刚对ST数据库中Student表的 select 权限：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> ST;</div><div class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">on</span> Student <span class="keyword">to</span> 李刚;</div></pre></td></tr></table></figure>
+<p>授予李刚 插入，更新，删除的权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> ST;</div><div class="line"><span class="keyword">grant</span> <span class="keyword">insert</span> ,<span class="keyword">update</span>, <span class="keyword">delete</span> <span class="keyword">on</span> Student <span class="keyword">to</span> 李刚 ;</div></pre></td></tr></table></figure>
+<h4 id="4-撤销权限"><a href="#4-撤销权限" class="headerlink" title="4. 撤销权限"></a>4. 撤销权限</h4><p>如果不希望用户执行某些对数据库的操作时，可以撤销先前授予用户的操作权限。</p>
+<blockquote>
+<p>格式： revoke select on &lt;&gt;</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> -DateBase </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Sql </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[简单UML类图绘制]]></title>
       <url>/2017/10/31/ClassDiagram/</url>
       <content type="html"><![CDATA[<h1 id="简单的UML类图绘制"><a href="#简单的UML类图绘制" class="headerlink" title="简单的UML类图绘制"></a>简单的UML类图绘制</h1><p>UML 2.0 的所有图形中，类图（Class diagram）是使用频率最高的UML图之一。至少笔者接触到的所有UML图中，绝大多数都是类图。类图是用于描述系统中包含的类以及他们之间的相互关系，帮助人们简化对系统的理解。也是系统编码和测试的重要依据。本文以 Java 语言为基础，来简述类图的一些简单的绘制方法。</p>
