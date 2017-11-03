@@ -4,7 +4,7 @@
     
     <entry>
       <title><![CDATA[Java 简单的图形界面设计]]></title>
-      <url>/2017/11/02/SimpleJavaUI/</url>
+      <url>/2017/11/02/SimpleJavaSwing1/</url>
       <content type="html"><![CDATA[<h1 id="Java简单的图形界面设计"><a href="#Java简单的图形界面设计" class="headerlink" title="Java简单的图形界面设计"></a>Java简单的图形界面设计</h1><p>Java图形设计图像界面的主要元素由图形用户界面工具包 Swing 提供。 </p>
 <p>包括了界面组件，事件处理模型，图形和图像工具、布局管理器等。它们主要都在 javax.swing 包内。 Swing 是Java标准包的一部分，它为大规模的GUI界面开发提供了丰富的基础结构。 </p>
 <a id="more"></a>
