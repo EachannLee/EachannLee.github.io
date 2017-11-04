@@ -155,6 +155,14 @@
             
 
             <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Java/">
+                    Java <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/Cpp/">
                     Cpp <span class="right">1 篇</span></a>
                 </a>
@@ -171,14 +179,6 @@
         
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Java/">
-                    Java <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/DateBase/">
                     DateBase <span class="right">1 篇</span></a>
                 </a>
@@ -188,7 +188,7 @@
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/Other/">
-                    Other <span class="right">1 篇</span></a>
+                    Other <span class="right">2 篇</span></a>
                 </a>
             </li>
 
@@ -385,6 +385,11 @@
 </blockquote>
 <p>默认初始化：</p>
 <p>如果定义变量时没有指定初值，则变量被默认初始化。此时变量被赋予了默认值。如果内置类型的变量未被显式的初始化，它的值由定义的位置决定，定义于任何函数体之外的变量被初始化为0，<strong>一种例外情况是，定义在函数体内部的内置类型变量将不会被初始化。</strong> 一个未被初始化的内置类型变量的值是未定义的，如果试图copy或者以其他形式的访问此值将引发错误。</p>
+<blockquote>
+<p>需要注意的是，即便是 java 定义函数体内部的内置类型也也不会被初始化。</p>
+<p>但是，在Java中如果没有进行初始化，编译器会抛出 类似于</p>
+<p>Exception in thread “main” java.lang.Error: Unresolved compilation problem: 的异常，但是，在C++中，我们不得不去注意它带来的种种问题。 </p>
+</blockquote>
 <p>每个类各自决定其初始化对象的方式，而且，是否允许不经初始化就定义对象也有类自己决定。如果类允许这种决定，它将决定类的对象的初始化到底是什么。</p>
 <h3 id="变量声明和定义的关系"><a href="#变量声明和定义的关系" class="headerlink" title="变量声明和定义的关系"></a>变量声明和定义的关系</h3><p>为了允许把程序拆分成多个逻辑部分来编写，C++支持分离式编译机制，允许将程序分割成若干个文件，每个文件可以被独立编译。</p>
 <p>如果将程序分为多个文件，则需要在 有文件间共享代码的方法，例如： 一个文件的代码可能需要使用另一个文件中定义的变量。</p>
@@ -459,7 +464,7 @@
 <h4 id="void-指针"><a href="#void-指针" class="headerlink" title="void * 指针"></a>void * 指针</h4><p>void*是一种特殊的指针类型，可以用于存放任意对象的地址，一个指针存放地址这一单和其他的指针类似，不同的是，我们对该地址中到底是一个什么类型的对象并不了解。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> obj = <span class="number">3.14</span>, *pd = &amp;obj;</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; 正确，<span class="keyword">void</span> * 能够存放任意类型的对象</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; obj可以是任意类型你的对象。</div><div class="line">pv = pd; pv 可以存放任意类型的指针</div></pre></td></tr></table></figure>
 <p>利用void<em> 指针所能够做的事情比较有限，那他和别的指针比较，作为函数的输入和输出，后者复制为另外一个void</em> 指针，不能够直接操作 void* 所指向的对象，因为无法确定这个对象是什么类型。 也就无从得知要怎么操作这个对象</p>
-<p>概括说来，void* 视角来看吗内存空间也就仅仅是内存空间，无法访问内存空间中的对象。当然我们也可以考虑对它进行转型，但是现在暂时不会讨论这个问题。</p>
+<p>概括说来，void* 视角来看内存空间也就仅仅是内存空间，无法访问内存空间中的对象。当然我们也可以考虑对它进行转型，但是现在暂时不会讨论这个问题。</p>
 <p>注： 以上所有内容为个人学习 C++ primer 所作的笔记。仅仅用于学习交流之用，不可以用于任何商业用途。如果想要获取更多的内容，请购买正版书籍。 </p>
 <p>同时，主页的RESOURCES 内提供了一个PDF版本可以参考使用。</p>
 
