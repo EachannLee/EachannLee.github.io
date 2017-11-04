@@ -3,9 +3,248 @@
   
     
     <entry>
-      <title><![CDATA[Java简单图形界面(二)布局管理器]]></title>
+      <title><![CDATA[C++基础笔记（一） 变量和类型]]></title>
+      <url>/2017/11/04/CppNotes_1/</url>
+      <content type="html"><![CDATA[<p>本人学习C++所做的笔记。本节主要是关于C++的变量和基本类型</p>
+<a id="more"></a>
+<h2 id="基本内置类型："><a href="#基本内置类型：" class="headerlink" title="基本内置类型："></a>基本内置类型：</h2><p>C++定义了一套包含算数类型（arithmetic type ）和空类型（void）在内的基本数据类型。</p>
+<h4 id="算数类型："><a href="#算数类型：" class="headerlink" title="算数类型："></a>算数类型：</h4><p>算数类型的尺寸在不同的基础上有所区别。下表是C++标准规定的尺寸的最小值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">类型                 含义            最小尺寸</div><div class="line"><span class="keyword">bool</span>               布尔类型             未定义</div><div class="line">(u)<span class="keyword">char</span>                字符                 <span class="number">8</span>位</div><div class="line"><span class="keyword">wchar_t</span>             宽字符              <span class="number">16</span>位</div><div class="line"><span class="keyword">char16_t</span>           Unicode字符          <span class="number">16</span>位</div><div class="line"><span class="keyword">char32_t</span>           Unicode字符          <span class="number">32</span>位</div><div class="line">(u)<span class="keyword">short</span>              短整型               <span class="number">16</span>位</div><div class="line">(u)<span class="keyword">int</span>                整形                 <span class="number">16</span>位</div><div class="line">(u)<span class="keyword">long</span>                 长整形             <span class="number">32</span>位</div><div class="line">(u)<span class="keyword">long</span> <span class="keyword">long</span>            长整形             <span class="number">64</span>位</div><div class="line"><span class="keyword">float</span>               单精度浮点          <span class="number">6</span>位有效数字</div><div class="line"><span class="keyword">double</span>              双精度             <span class="number">10</span>有效数字</div><div class="line"><span class="keyword">long</span> <span class="keyword">double</span>       扩展精度浮点        <span class="number">10</span>位有效数字</div></pre></td></tr></table></figure>
+<p>在C++中除去了布尔型和可以扩展的字符型之外，其他整形可以划分为带符号和无符号的两种用 <code>signed</code>和<code>unsigned</code>两种。（在Java中不存在无符号整形）</p>
+<h4 id="如何选择类型"><a href="#如何选择类型" class="headerlink" title="如何选择类型"></a>如何选择类型</h4><ol>
+<li>知晓数值不可能为负，选用无符号类型</li>
+<li>使用int 进行整数运算</li>
+<li>执行浮点运算使用 double</li>
+</ol>
+<h2 id="类型转换-convert"><a href="#类型转换-convert" class="headerlink" title="类型转换(convert)"></a>类型转换(convert)</h2><p>类型所能够表示的范围决定了转换的过程</p>
+<ol>
+<li>当一个非bool的值赋值给bool时，0为false,其他为 true</li>
+<li>将 bool 赋值给非 bool , false为 0，true 为 1</li>
+<li>将浮点赋值给 整形时，将小数点后的数位截断，保留整数部分</li>
+<li>整数赋值给浮点的时候，小数部分记为<code>.0</code></li>
+<li>当给 一个无符号类型一个超过其范围的值的时候，结果是初始值对无符号类型表示数值总数取模后的余数，举个例子： 一个8位的unsigned char 可以表示 0-255 区间内的值，如果我们赋了一个区间以外的值，实际的结果是该值对256取模后的余数，因此，把-1给0比特大小的unsigned char 所得到的结果是 255</li>
+<li>当我们复制给带符号类型一个超出表示范围的值时，结果是未定义的，程序可能够继续工作，也可能崩溃，也可能生成垃圾数据；</li>
+</ol>
+<h2 id="字面值常量（literal）"><a href="#字面值常量（literal）" class="headerlink" title="字面值常量（literal）"></a>字面值常量（literal）</h2><h3 id="整形和浮点型字面值"><a href="#整形和浮点型字面值" class="headerlink" title="整形和浮点型字面值"></a>整形和浮点型字面值</h3><p>可以将整形的字面值写作 10进制，八进制，16进制的形式。从0开头的整数表示八进制，0x或者0X开头的表示 16进制。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">20</span> <span class="comment">/*10进制*/</span></div><div class="line"><span class="number">024</span> <span class="comment">/*8进制*/</span></div><div class="line"><span class="number">0x14</span> <span class="comment">/*16进制*/</span></div></pre></td></tr></table></figure>
+<p>默认的浮点字面值是一个double ,当然了我们可以使用响应的后缀表示其他的类型。其表示方法是一个小数或者是科学计数法表示的指数，其中指数部分使用<code>E</code>或者<code>e</code>中的后缀来表示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">3.14159</span></div><div class="line"><span class="number">3.14159E0</span></div><div class="line"><span class="number">0.</span></div><div class="line"><span class="number">0e0</span></div><div class="line"><span class="number">.001</span></div></pre></td></tr></table></figure>
+<h3 id="字符和字符串字面值"><a href="#字符和字符串字面值" class="headerlink" title="字符和字符串字面值"></a>字符和字符串字面值</h3><p>用单引号括起来的一个字符称为是 char 型的字面值。</p>
+<p>双引号括起来的多个字符构成字符串字面值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'a'</span> <span class="comment">/*字符字面值*/</span></div><div class="line"><span class="string">"Hello"</span> <span class="comment">/*字符串字面值*/</span></div></pre></td></tr></table></figure>
+<p>字符串的字面值实际上是由常量的字符构成的数组（array）,编译器后在每个字符串的结尾处加上一个空字符<code>\0</code>，因此，字符串字面值的长度比实际长度要小一位。</p>
+<p>如果两个字符串字面值相邻而且仅仅 由空格缩进和换行符分割，则它们实际上是一个整体当书写的字符串字面值比较长的时候，可以采取分开书写的方式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"a really ,really long string literal "</span></div><div class="line">  <span class="string">"that spans two lines"</span> &lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<h3 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h3><p>有两种字符是不能够直接使用的，</p>
+<ol>
+<li>不可打印字符如退格符，或者其他控制字符（常用与数据通信控制）</li>
+<li>在C++中含有特殊含义的字符。</li>
+</ol>
+<p>这些情况下使用到转移序列，均以反斜杠开始，C++中的转义字符包括：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\n \t \a \v \b \<span class="string">" \' \\ \?  \r \f</span></div></pre></td></tr></table></figure>
+<h3 id="指定字面值的类型"><a href="#指定字面值的类型" class="headerlink" title="指定字面值的类型"></a>指定字面值的类型</h3><p>通过添加前缀或者是后缀可以改变整形，浮点型和字符型字面值的默认类型.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">L'a'   宽字符类型字面值， <span class="keyword">wchar_t</span></div><div class="line"><span class="string">u8"hi!"</span> utf<span class="number">-8</span> 字符串字面值</div><div class="line"><span class="number">42U</span>LL 无符号整形字面值，类型是 <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> </div><div class="line"><span class="number">1E-3</span>F 单精度的浮点型字面值， 类型是 <span class="keyword">float</span></div><div class="line"><span class="number">3.14159L</span>  类型是 <span class="keyword">long</span> <span class="keyword">double</span></div></pre></td></tr></table></figure>
+<p>指定字符字面值的类型：</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>含义</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u</td>
+<td>Unicode16</td>
+<td>char16_t</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unicode32</td>
+<td>char32_t</td>
+</tr>
+<tr>
+<td>L</td>
+<td>宽字符</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td>u8</td>
+<td>UTF-8</td>
+<td>char</td>
+</tr>
+</tbody>
+</table>
+<p>整形字面值：</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>最小匹配类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u or U</td>
+<td>unsigned</td>
+</tr>
+<tr>
+<td>l or L</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ll or LL</td>
+<td>long long</td>
+</tr>
+</tbody>
+</table>
+<p>浮点型字面值：</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f 或 F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>l 或 L</td>
+<td>long double</td>
+</tr>
+</tbody>
+</table>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><blockquote>
+<p>定义格式：  &lt;类型&gt;  变量名  [= 初始值] ;</p>
+</blockquote>
+<p>默认初始化：</p>
+<p>如果定义变量时没有指定初值，则变量被默认初始化。此时变量被赋予了默认值。如果内置类型的变量未被显式的初始化，它的值由定义的位置决定，定义于任何函数体之外的变量被初始化为0，<strong>一种例外情况是，定义在函数体内部的内置类型变量将不会被初始化。</strong> 一个未被初始化的内置类型变量的值是未定义的，如果试图copy或者以其他形式的访问此值将引发错误。</p>
+<p>每个类各自决定其初始化对象的方式，而且，是否允许不经初始化就定义对象也有类自己决定。如果类允许这种决定，它将决定类的对象的初始化到底是什么。</p>
+<h3 id="变量声明和定义的关系"><a href="#变量声明和定义的关系" class="headerlink" title="变量声明和定义的关系"></a>变量声明和定义的关系</h3><p>为了允许把程序拆分成多个逻辑部分来编写，C++支持分离式编译机制，允许将程序分割成若干个文件，每个文件可以被独立编译。</p>
+<p>如果将程序分为多个文件，则需要在 有文件间共享代码的方法，例如： 一个文件的代码可能需要使用另一个文件中定义的变量。</p>
+<p>为了支持分离式编译，C++将声明和定义分离开来，</p>
+<p>声明（declaration） 使得名字为程序所知，一个文件如果想要使用别处定义的名字则必须包含对那个名字的声明，而</p>
+<p>定义负责创建与名字关联的实体。</p>
+<p>变量声明规定了变量的类型和名字，在这一点上定义与之相同，<strong>但是除此之外，定义还申请存储空间，也可能够为变量赋一个初始值。</strong></p>
+<p>如果想声明一个变量而非定义它，就在变量名前添加关键词 extern 而且不要显式的初始化变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i ;<span class="comment">//声明i 而非定义 i</span></div><div class="line"><span class="keyword">int</span> j ;<span class="comment">//声明定而非定义 j</span></div></pre></td></tr></table></figure>
+<p>包含了显式初始化的声明即成为定义。我们能够给 由 extern 关键词标记的变量赋的是一个初值。但是这么做也就是抵消了extern 的作用，extern 语句如果包含初始值就不再是声明，而变成了定义了。</p>
+<p>在函数体内部，如果试图初始化一个由 extern 关键词标记的变量，将引发错误</p>
+<h4 id="变量能且只能被定义一次，但是可以被多次声明。"><a href="#变量能且只能被定义一次，但是可以被多次声明。" class="headerlink" title="变量能且只能被定义一次，但是可以被多次声明。"></a>变量能且只能被定义一次，但是可以被多次声明。</h4><p>C++是一种静态类型语言（statically typed）语言，其含义是在编辑阶段检查类型，其中检查类型的过程称之为类型检查（type checking）</p>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>C++标识符由字符,数字和下划线组成，其中必须以字母或下划线开头，标识符的长度没有限制，但是对大小写字母敏感。</p>
+<ol>
+<li>标识符要能够体现实际意义</li>
+<li>变量名一般用小写字母，如 index ,不要使用 Index, INDEX</li>
+<li>用户自定义的类名一般以大写字母开头，如 Sales_item</li>
+<li>如果标识符由多个单词组成，则单词键要有明显的区分，如 student_loan 或者studentLoan, 不要使用 studentloan </li>
+</ol>
+<h3 id="名字的作用域"><a href="#名字的作用域" class="headerlink" title="名字的作用域"></a>名字的作用域</h3><p>不论在程序的什么位置，使用到每个名字都会指向一个特定的实体，变量，函数，类型等，同一个名字出现杂程序的不同的位置，也可能指向的是不同尸体。</p>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p>是程序的一部分，在其中名字有其特定的含义，C++中大多数作用域以花括号分隔</p>
+<p>同一个名字在不同的作用域中可能指向不同的实体，名字的有效区域始于名字的声明语句，以声明语句所在的作用 域末端为结束。</p>
+<h4 id="嵌套的作用域："><a href="#嵌套的作用域：" class="headerlink" title="嵌套的作用域："></a>嵌套的作用域：</h4><p>作用域能彼此包含，被包含（或者被说被嵌套）的作用域被称为内层作用域，包含着别的作用域的作用域称为外层作用域（outer scope）</p>
+<h4 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h4><p>复习类型是基于其他类型定义的类型，C++中有很多的数学类型，典型的两种：指针，引用</p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p>严格来说，当我们使用引用，引用（reference）为对象起了另外一个名字，引用类型引用(refers to) 另外 一种类型，通过将声明写成 &amp;d 的形式来定义引用类型，其中d是声明的变量名</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">1024</span>;</div><div class="line"><span class="keyword">int</span> &amp;refval = ival; refVal 指向ival(是ival另外一个名字)</div><div class="line"><span class="keyword">int</span> &amp;refval2 ; <span class="comment">//报错，引用必须被初始化</span></div></pre></td></tr></table></figure>
+<p>一般在初始化变量时，初始值会被copy到新建的对象中，然而定义引用的时候，程序把引用和它的初始值 bind绑定在一起，而不是将初始值copy给引用，一旦初始化完成，引用将和它的初始对象一直绑定在一起。 因此无法令 引用重新绑定到另外一个对象，因此引用必须初始化</p>
+<p>引用即别名：</p>
+<p>引用并非对象，相反的，它只是为一个已经存在的对象所起的另外一个名字。</p>
+<p>定义了一个引用之后，对其进行的所有的操作都是在与之绑定的对象进行的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">refVal = <span class="number">2</span>; <span class="comment">//把2赋给refVal 指向的对象，此处即使赋给了ival;</span></div><div class="line"><span class="keyword">int</span> li = reVal ;<span class="comment">//与 li = ival 执行结果一样</span></div></pre></td></tr></table></figure>
+<p>为引用赋值，实际上是把赋值给了与引用绑定的对象，获取引用的值，实际上是获取了去了与引用绑定的对象的值，同理，以引用作为引用值，实际上是以与引用绑定的对象作为初始值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> &amp;refVal3 = reVal;</div><div class="line">正确： refVal3 绑定到了那个与refVal 绑定的对象，这里就是绑定到 ival上。</div><div class="line"><span class="keyword">int</span> i = refVal ;<span class="comment">//正确：i被初始化为 ival 的值。</span></div></pre></td></tr></table></figure>
+<p>因为引用本身不是一个对象，所以不能够定义为 引用的 引用。</p>
+<p>引用的定义：</p>
+<p>允许在一条语句中定义多个引用，其中每个标识符都必须以符号&amp;开头。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">1024</span> , i2 = <span class="number">2048</span> ; i1 和 i2 都是  <span class="keyword">int</span></div><div class="line"><span class="keyword">int</span> &amp;r = i; r2= i2;  r是一个引用，与i绑定在一起，r2 是<span class="keyword">int</span> </div><div class="line"><span class="keyword">int</span> i3 = <span class="number">1024</span>, &amp;ri = i3;  i3 是<span class="keyword">int</span> ,ri 是一个引用，与i3 绑定在一起</div><div class="line"><span class="keyword">int</span> &amp;r3 = i3; &amp;r4 = i2; r3 和 r4 都是引用。</div></pre></td></tr></table></figure>
+<p>将要介绍的介绍的两种例外的情况，其他所有的引用的类型都要与与之绑定的对象严格匹配，而且，引用只能绑定在对象上，而不能与字面值或某个表达式的计算结果绑定在一起。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> &amp;refVal4 = <span class="number">10</span> ;错误，引用类型的初始值必须是一个对象</div><div class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</div><div class="line"><span class="keyword">int</span> &amp;refVal5 = dval ; <span class="comment">//错误： 此处引用类型的初始值必须是int型对象</span></div></pre></td></tr></table></figure>
+<h4 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h4><p>指针 pointer 是指向 point to 另外一种类型的符合类型，与引用类似，指针也实现了对其他对象的间接访问，然而指针与引用相比又有很多的不同点，其一，指针本身也就是一个对象，允许对指针赋值和copy,而且在指针的生命周期内它可以先后指向几个不同的对象。其二，指针无需在定义时赋值，和其他内置类型一样，这块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值。</p>
+<p>定义指针类型的方法将声明符写成<em>d的形式，其中 d 是变量名，如果在一条语句中定义了几个指针变量，每个变量前面必须有符号 </em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>  * ip1 , * ip1 ; ip1 和 ip2 都是指向 <span class="keyword">int</span> 型对象的指针</div><div class="line"><span class="keyword">double</span> dp , * dp2 ; dp2 是指向<span class="keyword">double</span>型对象的指针中，dp 是<span class="keyword">double</span> 型对象</div></pre></td></tr></table></figure>
+<h3 id="获取对象的地址"><a href="#获取对象的地址" class="headerlink" title="获取对象的地址"></a>获取对象的地址</h3><p>指针存放某个对象的地址，要想获取该地址，需要使用 <strong>取地址符</strong>(操作符 &amp;)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</div><div class="line"><span class="keyword">int</span> *p = &amp;ival ; <span class="comment">//p 存放变量ival的地址，或说p 是真相变量 ival 的指针</span></div></pre></td></tr></table></figure>
+<p>所有的指针类型都要和它所指向的对象严格匹配：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> dval ;</div><div class="line"><span class="keyword">double</span> *pd = &amp;dval ; </div><div class="line"><span class="keyword">double</span> *pd2 = pd; </div><div class="line"><span class="keyword">int</span> *pi = pd; 错误，指针p的类型和pd的类型不匹配</div><div class="line">pi = &amp;dval ; 错误，视图吧<span class="keyword">double</span> 类型的指针赋值给<span class="keyword">int</span>型指针。</div></pre></td></tr></table></figure>
+<p>一个指针的值（即地址）应该满足一下四种状态之一：</p>
+<ol>
+<li>指向一个对象</li>
+<li>指向紧邻对象向所占有空间的下一个位置。</li>
+<li>空指针，指针没有指向任何对象</li>
+<li>无效指针，上述情况之外的其他值</li>
+</ol>
+<p>视图去copy或者访问无效指针的值都会引发错误，编译器不会检查此类错误这一点和视图使用未经过初始化的变量是一样的，</p>
+<p>####利用指针访问对象</p>
+<p>如果访问了一个对象，则允许使用解引用符(操作符 *)来访问对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</div><div class="line"><span class="keyword">int</span> *p = &amp;ival ; p 存放着变量 ival 的地址，或者说 p 是指向变量 ival的指针</div><div class="line"><span class="built_in">cout</span>&lt;&lt; *p ; 由符号 * 得到指针p 所指向的队形，输出 <span class="number">42</span>；</div><div class="line">*p = <span class="number">0</span>;  有符号 * 得到指针 p 所指的对象，即可经由p为变量 ival 赋值</div><div class="line"><span class="built_in">cout</span> &lt;&lt; *p; 输出 <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>当引用操作仅仅适用于那些确实指向了某个对象的有效指针</p>
+<h4 id="空指针"><a href="#空指针" class="headerlink" title="空指针"></a>空指针</h4><p>空指针（null pointer） 不指向任何对象，在试图使用一个指针之间代码可以首先检查它是否为空，以下列出几个生成空指针的方法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>;  等价于 <span class="keyword">int</span> *p1 = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> *p2 = <span class="number">0</span>;  直接将p2初始化为字面常量 <span class="number">0</span></div><div class="line"><span class="keyword">int</span> *p3 = <span class="literal">NULL</span> ; 等价于 <span class="keyword">int</span> *p3 = <span class="number">0</span>;</div></pre></td></tr></table></figure>
+<p>得到空指针的最直接的方法是用字面值 nullptr 来初始化指针，这也是 C++11标准最新引入的一种方法，nullptr 是一种特殊类型的字面值。 他可以转换为任意其他类型的指针，另一种方法试试可将指针初始化为 0 来生成空指针。</p>
+<p>过去的程序还会用到一个名为 NULL 的预处理变量，（preprocessor variable）来个指针赋值，这个变量在头文件 <code>cstdlib</code>中的定义，它的值就是 0</p>
+<p>但是需要知道的是，尽管我们说 nullptr 和NULL 它在定义时值确实是0，但是我们一定要知道的是，将 int 变量的值恰好等于0也不行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> zero = <span class="number">0</span>;</div><div class="line">pi = zero; <span class="comment">//错误：不能把int 变量直接赋给指针</span></div></pre></td></tr></table></figure>
+<h4 id="复制和指针"><a href="#复制和指针" class="headerlink" title="复制和指针"></a>复制和指针</h4><p>指针和引用都能提供对其他对象的简介访问，然而在具体是实现细节上二者有很大的不同，其中最重要的一点就是引用本身并非一个对象，一旦定义了引用，就无法令其再绑定到另外的对象。之后每次访问这个引用都是直接访问它最初的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">42</span>; </div><div class="line"><span class="keyword">int</span> *pi = <span class="number">0</span> ; pi被初始化，没有指向任何对象</div><div class="line"><span class="keyword">int</span> *pi2 = &amp;i; </div><div class="line"><span class="keyword">int</span> *pi3 ; pi3 定义与块内，则pi3的值是无法确定的。</div><div class="line">pi3 = pi2; pi3 和 pi2 指向同一个对象 存有 i 的地址</div><div class="line"><span class="keyword">int</span> *pi3 ; 如果pi3 定义与快内，则 pi3 的值是无法确定的</div><div class="line">pi3 = pi2; pi3 和 pi2 指向同一个对象</div><div class="line">pi2 = <span class="number">0</span> ; 现在 pi2 不指向任何对象了</div></pre></td></tr></table></figure>
+<p>有时候要搞清楚一条赋值语句到底是改变了指针的值还是改变了指针所指向的对象的值不太容易，最好的方法就是记住赋值永远改变的是等号左侧的对象。</p>
+<p>当我们写出如下的语句的时候，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pi = &amp;ival ; pi 的值会改变，现在pi指向了 ival </div><div class="line">*pi = <span class="number">0</span>  ; ival 的值会被该表，指针 pi 并没有改变</div></pre></td></tr></table></figure>
+<h4 id="其他的指针操作"><a href="#其他的指针操作" class="headerlink" title="其他的指针操作"></a>其他的指针操作</h4><p>对于两个类型相同的合法指针，就可以把它用在条件表达式中，和采用算术值作为条件遵循的规律类似，如果指针的值为0，条件 为false ,非0 ，true</p>
+<p>对于类型相同的合法指针，可以使用相等的 <code>==</code>和 不等<code>==</code>操作符来比较他们比较的结果是bool.</p>
+<h4 id="void-指针"><a href="#void-指针" class="headerlink" title="void * 指针"></a>void * 指针</h4><p>void*是一种特殊的指针类型，可以用于存放任意对象的地址，一个指针存放地址这一单和其他的指针类似，不同的是，我们对该地址中到底是一个什么类型的对象并不了解。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> obj = <span class="number">3.14</span>, *pd = &amp;obj;</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; 正确，<span class="keyword">void</span> * 能够存放任意类型的对象</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; obj可以是任意类型你的对象。</div><div class="line">pv = pd; pv 可以存放任意类型的指针</div></pre></td></tr></table></figure>
+<p>利用void<em> 指针所能够做的事情比较有限，那他和别的指针比较，作为函数的输入和输出，后者复制为另外一个void</em> 指针，不能够直接操作 void* 所指向的对象，因为无法确定这个对象是什么类型。 也就无从得知要怎么操作这个对象</p>
+<p>概括说来，void* 视角来看吗内存空间也就仅仅是内存空间，无法访问内存空间中的对象。当然我们也可以考虑对它进行转型，但是现在暂时不会讨论这个问题。</p>
+<p>注： 以上所有内容为个人学习 C++ primer 所作的笔记。仅仅用于学习交流之用，不可以用于任何商业用途。如果想要获取更多的内容，请购买正版书籍。 </p>
+<p>同时，主页的RESOURCES 内提供了一个PDF版本可以参考使用。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> -Cpp </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Cpp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Java简单的图形界面设计(二)布局管理器]]></title>
       <url>/2017/11/03/SimpleJavaSwing2/</url>
-      <content type="html"><![CDATA[<a id="more"></a>]]></content>
+      <content type="html"><![CDATA[<h1 id="布局管理器"><a href="#布局管理器" class="headerlink" title="布局管理器"></a>布局管理器</h1><p>布局管理器是指窗口上的组件遵循一定的规则来排列，并且会随着窗口大小的变化来改变组件大小与位置的一种布局方式。Java语言的布局管理器所提供的自动布局功能来进行页面设置，则可以自动的排列与管理窗口中的组件。也就是说，当为一个容器指定一个布局管理器后，则将每当一个组件加入到该容器中时，布局管理器就可以自动的设置该组件的位置的位置和大小。当容器改变大小的时候，布局管理器能自动调整其中组件的位置和大小。用户可以为容器指定不同的布局管理器，在不同的管理布局器下，同一个组件可以有不同的显示效果。</p>
+<a id="more"></a>
+<p>java.awt 包中共定义了五中布局管理器，每个布局管理器对应一种布局策略。分别是流式布局管理器（FLowLayout）边界式布局管理器 (BorderLayout)，卡片式布局管理器（CardLayout）,网格式布局管理器（GridBayLayout）。javax.swing 包中还有盒式布局管理器（BoxLayout）重叠布局管理器（OverLayout）和弹簧式布局管理器 SpringLayout 等。</p>
+<h2 id="流式布局管理器-FlowLayout"><a href="#流式布局管理器-FlowLayout" class="headerlink" title="流式布局管理器 FlowLayout"></a>流式布局管理器 FlowLayout</h2><p>流式布局是一种最基本的布局。它是一种流式页面设计。流式布局管理器的的布局策略：</p>
+<ol>
+<li>组件按照加入容器的先后顺序从左到右排列。</li>
+<li>一行排满之后就会自动地转到下一行继续从左到右。</li>
+<li>每一行中的组件默认设置为居中排列</li>
+<li>FlowLayout 布局管理器是JPanel 默认的布局管理方式</li>
+</ol>
+<p>##构造器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">()</span> 创建 FlowLayout 布局管理器，容器中的对象居中对齐，对象的垂直和水平间距默认均为5个像素</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">( <span class="keyword">int</span> align)</span> 创建同上功能的布局管理器，指定对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">(<span class="keyword">int</span> align , <span class="keyword">int</span> hvap , <span class="keyword">int</span> vgap)</span> 创建同上具有对齐功能的布局管理器，但对象的水平间距为 hgap 个像素，垂直间距为 vgap 个像素</span></div></pre></td></tr></table></figure>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHap</span><span class="params">()</span> 返回该布局管理器中各组件之间水平间距的像素数</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVgap</span><span class="params">()</span> 返回布局管理器之间组件之间水平间距的像素数</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHgap</span><span class="params">(<span class="keyword">int</span> hgap)</span> </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVgap</span><span class="params">(<span class="keyword">int</span> vgap)</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">setAlignment</span><span class="params">(<span class="keyword">int</span> align)</span> 设置布局管理器的对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAlignment</span><span class="params">()</span> 设置布局管理器的对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layoutContainer</span><span class="params">(Container target)</span> 设置target容器组件的布局方式为FlowLayout .</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLayoutComponent</span><span class="params">(String name,Component comp)</span> 指定的组件加入到布局管理器中，使用的指定的名称</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeLayoutComponent</span><span class="params">(Component comp)</span> 将指定组件从该布局管理器中删除</span></div></pre></td></tr></table></figure>
+<p>一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_8</span> <span class="keyword">extends</span> <span class="title">JFrame</span></span>&#123;</div><div class="line">	<span class="keyword">static</span> JFrame frm = <span class="keyword">new</span> JFrame(<span class="string">"流式布局管理器FlowLayout"</span>);</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		FlowLayout flow = <span class="keyword">new</span> FlowLayout(FlowLayout.CENTER,<span class="number">5</span>,<span class="number">10</span>);</div><div class="line">		JButton but = <span class="keyword">new</span> JButton(<span class="string">"按钮"</span>);</div><div class="line">		JLabel lab = <span class="keyword">new</span> JLabel(<span class="string">"我是一个标签"</span>);</div><div class="line">		frm.setLayout(flow);</div><div class="line">		frm.setSize(<span class="number">260</span>, <span class="number">150</span>);</div><div class="line">		frm.add(but);</div><div class="line">		frm.add(lab);</div><div class="line">		frm.add(<span class="keyword">new</span> JTextField(<span class="string">"流式布局策略 FlowLayout"</span>,<span class="number">18</span>));</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<h2 id="边界布局管理器-BorderLayout"><a href="#边界布局管理器-BorderLayout" class="headerlink" title="边界布局管理器 BorderLayout"></a>边界布局管理器 BorderLayout</h2><p>边界式布局管理器 BorderLayout 将显示区域按地理方位分为东East,西(West),南（South),北(North),中(Center)5个区域。在将组件加入容器时，都应该指出将组件加入到那个区域中，若没有指定区域，则默认为中间，将组件加入到已被其他组件占用的区域，将会取代原先的组件。BorderLayout 是容器JFrame ,JApplet 和对话框组件JDialog默认使用的布局管理器。</p>
+<p>分布在北部和南部区域的组件将横向扩展至占据整个容器的长度，分布在东部和西部将伸展至占据容器剩余部分的全部高度，最后剩余的部分将分配给位于中央区的组件。如果某个区域没有分配组件。则其他组件可以占据它的空间。</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BorderLayout</span><span class="params">()</span> 创建BorderLayout 布局管理器，容器中的个对象之间没有问题。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BorderLayout</span><span class="params">()</span> 创建BorderLayout 布局管理器，容器中组件之间的水平间隔为 hgap , 垂直间隔为 vgap 个像素</span></div></pre></td></tr></table></figure>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>和流式布局基本相同。</p>
+<p>一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_9</span> </span>&#123;</div><div class="line">	<span class="keyword">static</span> JFrame  frm = <span class="keyword">new</span> JFrame(<span class="string">"边界式布局管理器 BorderLayout"</span>);</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		BorderLayout border = <span class="keyword">new</span> BorderLayout(<span class="number">5</span>,<span class="number">10</span>);</div><div class="line">		frm.setLayout(border);</div><div class="line">		frm.setSize(<span class="number">330</span>,<span class="number">200</span>);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"上北"</span>), BorderLayout.NORTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"下南"</span>), BorderLayout.SOUTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"左西"</span>), BorderLayout.WEST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"右东"</span>), BorderLayout.EAST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"中央"</span>), BorderLayout.CENTER);</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<h2 id="网格布局管理器-GridLayout"><a href="#网格布局管理器-GridLayout" class="headerlink" title="网格布局管理器 GridLayout"></a>网格布局管理器 GridLayout</h2><p>网格式布局管理器 GridLayout 提供的页面布局规则是将容器的空间划分为若干行与类的网格形式，每个网格称为是单元格，在容器上添加组件是时，它们会按从左到右，从上到下的顺序在网格中排列行数和</p>
+]]></content>
       
         <categories>
             

@@ -7,15 +7,15 @@
 
     
 
-    <title>Java简单图形界面(二)布局管理器 | Li Jian&#39;s BOLG</title>
+    <title>Java简单的图形界面设计(二)布局管理器 | Li Jian&#39;s BOLG</title>
     <meta name="author" content="Li Jian">
     
-    <meta name="description" content="">
+    <meta name="description" content="布局管理器布局管理器是指窗口上的组件遵循一定的规则来排列，并且会随着窗口大小的变化来改变组件大小与位置的一种布局方式。Java语言的布局管理器所提供的自动布局功能来进行页面设置，则可以自动的排列与管理窗口中的组件。也就是说，当为一个容器指定一个布局管理器后，则将每当一个组件加入到该容器中时，布局管理器就可以自动的设置该组件的位置的位置和大小。当容器改变大小的时候，布局管理器能自动调整其中组件的位置和大小。用户可以为容器指定不同的布局管理器，在不同的管理布局器下，同一个组件可以有不同的显示效果。">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Java简单图形界面(二)布局管理器"/>
+    <meta property="og:title" content="Java简单的图形界面设计(二)布局管理器"/>
     <meta property="og:site_name" content="Li Jian&#39;s BLOG"/>
 
     
@@ -155,8 +155,8 @@
             
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Java/">
-                    Java <span class="right">3 篇</span></a>
+                <a class="no-padding" href="/categories/Cpp/">
+                    Cpp <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -165,6 +165,14 @@
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/Linux/">
                     Linux <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Java/">
+                    Java <span class="right">3 篇</span></a>
                 </a>
             </li>
 
@@ -180,7 +188,7 @@
 
             <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/Other/">
-                    Other <span class="right">2 篇</span></a>
+                    Other <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -233,7 +241,7 @@
             <div class="article-title">
                 
     
-        <h1>Java简单图形界面(二)布局管理器</h1>
+        <h1>Java简单的图形界面设计(二)布局管理器</h1>
     
 
 
@@ -254,13 +262,43 @@
 
 
             <div class="toc red-link-context hide-on-med-and-down">
-    
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#布局管理器"><span class="section table-of-contents-text">布局管理器</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#流式布局管理器-FlowLayout"><span class="section table-of-contents-text">流式布局管理器 FlowLayout</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#常用方法"><span class="section table-of-contents-text">常用方法</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#边界布局管理器-BorderLayout"><span class="section table-of-contents-text">边界布局管理器 BorderLayout</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#构造方法"><span class="section table-of-contents-text">构造方法</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#常用方法-1"><span class="section table-of-contents-text">常用方法</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#网格布局管理器-GridLayout"><span class="section table-of-contents-text">网格布局管理器 GridLayout</span></a></li></ol></li></ol>
 </div>
 
 
             <div class="entry red-link-context">
-                <a id="more"></a>
+                <h1 id="布局管理器"><a href="#布局管理器" class="headerlink" title="布局管理器"></a>布局管理器</h1><p>布局管理器是指窗口上的组件遵循一定的规则来排列，并且会随着窗口大小的变化来改变组件大小与位置的一种布局方式。Java语言的布局管理器所提供的自动布局功能来进行页面设置，则可以自动的排列与管理窗口中的组件。也就是说，当为一个容器指定一个布局管理器后，则将每当一个组件加入到该容器中时，布局管理器就可以自动的设置该组件的位置的位置和大小。当容器改变大小的时候，布局管理器能自动调整其中组件的位置和大小。用户可以为容器指定不同的布局管理器，在不同的管理布局器下，同一个组件可以有不同的显示效果。</p>
+<a id="more"></a>
+<p>java.awt 包中共定义了五中布局管理器，每个布局管理器对应一种布局策略。分别是流式布局管理器（FLowLayout）边界式布局管理器 (BorderLayout)，卡片式布局管理器（CardLayout）,网格式布局管理器（GridBayLayout）。javax.swing 包中还有盒式布局管理器（BoxLayout）重叠布局管理器（OverLayout）和弹簧式布局管理器 SpringLayout 等。</p>
+<h2 id="流式布局管理器-FlowLayout"><a href="#流式布局管理器-FlowLayout" class="headerlink" title="流式布局管理器 FlowLayout"></a>流式布局管理器 FlowLayout</h2><p>流式布局是一种最基本的布局。它是一种流式页面设计。流式布局管理器的的布局策略：</p>
+<ol>
+<li>组件按照加入容器的先后顺序从左到右排列。</li>
+<li>一行排满之后就会自动地转到下一行继续从左到右。</li>
+<li>每一行中的组件默认设置为居中排列</li>
+<li>FlowLayout 布局管理器是JPanel 默认的布局管理方式</li>
+</ol>
+<p>##构造器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">()</span> 创建 FlowLayout 布局管理器，容器中的对象居中对齐，对象的垂直和水平间距默认均为5个像素</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">( <span class="keyword">int</span> align)</span> 创建同上功能的布局管理器，指定对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">FlowLayout</span><span class="params">(<span class="keyword">int</span> align , <span class="keyword">int</span> hvap , <span class="keyword">int</span> vgap)</span> 创建同上具有对齐功能的布局管理器，但对象的水平间距为 hgap 个像素，垂直间距为 vgap 个像素</span></div></pre></td></tr></table></figure>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHap</span><span class="params">()</span> 返回该布局管理器中各组件之间水平间距的像素数</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVgap</span><span class="params">()</span> 返回布局管理器之间组件之间水平间距的像素数</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHgap</span><span class="params">(<span class="keyword">int</span> hgap)</span> </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVgap</span><span class="params">(<span class="keyword">int</span> vgap)</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">setAlignment</span><span class="params">(<span class="keyword">int</span> align)</span> 设置布局管理器的对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAlignment</span><span class="params">()</span> 设置布局管理器的对齐方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">layoutContainer</span><span class="params">(Container target)</span> 设置target容器组件的布局方式为FlowLayout .</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addLayoutComponent</span><span class="params">(String name,Component comp)</span> 指定的组件加入到布局管理器中，使用的指定的名称</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeLayoutComponent</span><span class="params">(Component comp)</span> 将指定组件从该布局管理器中删除</span></div></pre></td></tr></table></figure>
+<p>一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_8</span> <span class="keyword">extends</span> <span class="title">JFrame</span></span>&#123;</div><div class="line">	<span class="keyword">static</span> JFrame frm = <span class="keyword">new</span> JFrame(<span class="string">"流式布局管理器FlowLayout"</span>);</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		</div><div class="line">		FlowLayout flow = <span class="keyword">new</span> FlowLayout(FlowLayout.CENTER,<span class="number">5</span>,<span class="number">10</span>);</div><div class="line">		JButton but = <span class="keyword">new</span> JButton(<span class="string">"按钮"</span>);</div><div class="line">		JLabel lab = <span class="keyword">new</span> JLabel(<span class="string">"我是一个标签"</span>);</div><div class="line">		frm.setLayout(flow);</div><div class="line">		frm.setSize(<span class="number">260</span>, <span class="number">150</span>);</div><div class="line">		frm.add(but);</div><div class="line">		frm.add(lab);</div><div class="line">		frm.add(<span class="keyword">new</span> JTextField(<span class="string">"流式布局策略 FlowLayout"</span>,<span class="number">18</span>));</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<h2 id="边界布局管理器-BorderLayout"><a href="#边界布局管理器-BorderLayout" class="headerlink" title="边界布局管理器 BorderLayout"></a>边界布局管理器 BorderLayout</h2><p>边界式布局管理器 BorderLayout 将显示区域按地理方位分为东East,西(West),南（South),北(North),中(Center)5个区域。在将组件加入容器时，都应该指出将组件加入到那个区域中，若没有指定区域，则默认为中间，将组件加入到已被其他组件占用的区域，将会取代原先的组件。BorderLayout 是容器JFrame ,JApplet 和对话框组件JDialog默认使用的布局管理器。</p>
+<p>分布在北部和南部区域的组件将横向扩展至占据整个容器的长度，分布在东部和西部将伸展至占据容器剩余部分的全部高度，最后剩余的部分将分配给位于中央区的组件。如果某个区域没有分配组件。则其他组件可以占据它的空间。</p>
+<h3 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BorderLayout</span><span class="params">()</span> 创建BorderLayout 布局管理器，容器中的个对象之间没有问题。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">BorderLayout</span><span class="params">()</span> 创建BorderLayout 布局管理器，容器中组件之间的水平间隔为 hgap , 垂直间隔为 vgap 个像素</span></div></pre></td></tr></table></figure>
+<h3 id="常用方法-1"><a href="#常用方法-1" class="headerlink" title="常用方法"></a>常用方法</h3><p>和流式布局基本相同。</p>
+<p>一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_9</span> </span>&#123;</div><div class="line">	<span class="keyword">static</span> JFrame  frm = <span class="keyword">new</span> JFrame(<span class="string">"边界式布局管理器 BorderLayout"</span>);</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		BorderLayout border = <span class="keyword">new</span> BorderLayout(<span class="number">5</span>,<span class="number">10</span>);</div><div class="line">		frm.setLayout(border);</div><div class="line">		frm.setSize(<span class="number">330</span>,<span class="number">200</span>);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"上北"</span>), BorderLayout.NORTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"下南"</span>), BorderLayout.SOUTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"左西"</span>), BorderLayout.WEST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"右东"</span>), BorderLayout.EAST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"中央"</span>), BorderLayout.CENTER);</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<h2 id="网格布局管理器-GridLayout"><a href="#网格布局管理器-GridLayout" class="headerlink" title="网格布局管理器 GridLayout"></a>网格布局管理器 GridLayout</h2><p>网格式布局管理器 GridLayout 提供的页面布局规则是将容器的空间划分为若干行与类的网格形式，每个网格称为是单元格，在容器上添加组件是时，它们会按从左到右，从上到下的顺序在网格中排列行数和</p>
+
                 
+<p class="red-link-context">
+    <a href="/2017/11/04/CppNotes_1/" rel="next" title="C++基础笔记（一） 变量和类型">
+    上一篇：C++基础笔记（一） 变量和类型
+  </a>
+</p>
+
 
 
 <p class="red-link-context">

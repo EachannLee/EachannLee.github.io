@@ -1,0 +1,781 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>C++基础笔记（一） 变量和类型 | Li Jian&#39;s BOLG</title>
+    <meta name="author" content="Li Jian">
+    
+    <meta name="description" content="本人学习C++所做的笔记。本节主要是关于C++的变量和基本类型">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="C++基础笔记（一） 变量和类型"/>
+    <meta property="og:site_name" content="Li Jian&#39;s BLOG"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Li Jian&#39;s BLOG" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="red darken-4">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Li Jian&#39;s BLOG</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav pink darken-4" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://oykemr77k.bkt.clouddn.com/image/elemtype/jpg/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Li Jian</p>
+                        <p class="desc">大邪僧/日漫宅/</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav pink darken-4" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Cpp/">
+                    Cpp <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Java/">
+                    Java <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/DateBase/">
+                    DateBase <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Other/">
+                    Other <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper red darken-4">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Cpp/">-Cpp</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>C++基础笔记（一） 变量和类型</h1>
+    
+
+
+            </div>
+            <time class="red-link-context" datetime="2017-11-03T16:19:55.000Z"><a href="/2017/11/04/CppNotes_1/">2017-11-04</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Cpp/" class="chip brown">-Cpp</a>
+        
+    </div>
+
+
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#基本内置类型："><span class="section table-of-contents-text">基本内置类型：</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#算数类型："><span class="section table-of-contents-text">算数类型：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#如何选择类型"><span class="section table-of-contents-text">如何选择类型</span></a></li></ol></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#类型转换-convert"><span class="section table-of-contents-text">类型转换(convert)</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#字面值常量（literal）"><span class="section table-of-contents-text">字面值常量（literal）</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#整形和浮点型字面值"><span class="section table-of-contents-text">整形和浮点型字面值</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#字符和字符串字面值"><span class="section table-of-contents-text">字符和字符串字面值</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#转义字符"><span class="section table-of-contents-text">转义字符</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#指定字面值的类型"><span class="section table-of-contents-text">指定字面值的类型</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#变量"><span class="section table-of-contents-text">变量</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#变量声明和定义的关系"><span class="section table-of-contents-text">变量声明和定义的关系</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#变量能且只能被定义一次，但是可以被多次声明。"><span class="section table-of-contents-text">变量能且只能被定义一次，但是可以被多次声明。</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#标识符"><span class="section table-of-contents-text">标识符</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#名字的作用域"><span class="section table-of-contents-text">名字的作用域</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#作用域"><span class="section table-of-contents-text">作用域</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#嵌套的作用域："><span class="section table-of-contents-text">嵌套的作用域：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#复合类型"><span class="section table-of-contents-text">复合类型</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#引用"><span class="section table-of-contents-text">引用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#指针"><span class="section table-of-contents-text">指针</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#获取对象的地址"><span class="section table-of-contents-text">获取对象的地址</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#空指针"><span class="section table-of-contents-text">空指针</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#复制和指针"><span class="section table-of-contents-text">复制和指针</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#其他的指针操作"><span class="section table-of-contents-text">其他的指针操作</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#void-指针"><span class="section table-of-contents-text">void * 指针</span></a></li></ol></li></ol></li></ol>
+</div>
+
+
+            <div class="entry red-link-context">
+                <p>本人学习C++所做的笔记。本节主要是关于C++的变量和基本类型</p>
+<a id="more"></a>
+<h2 id="基本内置类型："><a href="#基本内置类型：" class="headerlink" title="基本内置类型："></a>基本内置类型：</h2><p>C++定义了一套包含算数类型（arithmetic type ）和空类型（void）在内的基本数据类型。</p>
+<h4 id="算数类型："><a href="#算数类型：" class="headerlink" title="算数类型："></a>算数类型：</h4><p>算数类型的尺寸在不同的基础上有所区别。下表是C++标准规定的尺寸的最小值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">类型                 含义            最小尺寸</div><div class="line"><span class="keyword">bool</span>               布尔类型             未定义</div><div class="line">(u)<span class="keyword">char</span>                字符                 <span class="number">8</span>位</div><div class="line"><span class="keyword">wchar_t</span>             宽字符              <span class="number">16</span>位</div><div class="line"><span class="keyword">char16_t</span>           Unicode字符          <span class="number">16</span>位</div><div class="line"><span class="keyword">char32_t</span>           Unicode字符          <span class="number">32</span>位</div><div class="line">(u)<span class="keyword">short</span>              短整型               <span class="number">16</span>位</div><div class="line">(u)<span class="keyword">int</span>                整形                 <span class="number">16</span>位</div><div class="line">(u)<span class="keyword">long</span>                 长整形             <span class="number">32</span>位</div><div class="line">(u)<span class="keyword">long</span> <span class="keyword">long</span>            长整形             <span class="number">64</span>位</div><div class="line"><span class="keyword">float</span>               单精度浮点          <span class="number">6</span>位有效数字</div><div class="line"><span class="keyword">double</span>              双精度             <span class="number">10</span>有效数字</div><div class="line"><span class="keyword">long</span> <span class="keyword">double</span>       扩展精度浮点        <span class="number">10</span>位有效数字</div></pre></td></tr></table></figure>
+<p>在C++中除去了布尔型和可以扩展的字符型之外，其他整形可以划分为带符号和无符号的两种用 <code>signed</code>和<code>unsigned</code>两种。（在Java中不存在无符号整形）</p>
+<h4 id="如何选择类型"><a href="#如何选择类型" class="headerlink" title="如何选择类型"></a>如何选择类型</h4><ol>
+<li>知晓数值不可能为负，选用无符号类型</li>
+<li>使用int 进行整数运算</li>
+<li>执行浮点运算使用 double</li>
+</ol>
+<h2 id="类型转换-convert"><a href="#类型转换-convert" class="headerlink" title="类型转换(convert)"></a>类型转换(convert)</h2><p>类型所能够表示的范围决定了转换的过程</p>
+<ol>
+<li>当一个非bool的值赋值给bool时，0为false,其他为 true</li>
+<li>将 bool 赋值给非 bool , false为 0，true 为 1</li>
+<li>将浮点赋值给 整形时，将小数点后的数位截断，保留整数部分</li>
+<li>整数赋值给浮点的时候，小数部分记为<code>.0</code></li>
+<li>当给 一个无符号类型一个超过其范围的值的时候，结果是初始值对无符号类型表示数值总数取模后的余数，举个例子： 一个8位的unsigned char 可以表示 0-255 区间内的值，如果我们赋了一个区间以外的值，实际的结果是该值对256取模后的余数，因此，把-1给0比特大小的unsigned char 所得到的结果是 255</li>
+<li>当我们复制给带符号类型一个超出表示范围的值时，结果是未定义的，程序可能够继续工作，也可能崩溃，也可能生成垃圾数据；</li>
+</ol>
+<h2 id="字面值常量（literal）"><a href="#字面值常量（literal）" class="headerlink" title="字面值常量（literal）"></a>字面值常量（literal）</h2><h3 id="整形和浮点型字面值"><a href="#整形和浮点型字面值" class="headerlink" title="整形和浮点型字面值"></a>整形和浮点型字面值</h3><p>可以将整形的字面值写作 10进制，八进制，16进制的形式。从0开头的整数表示八进制，0x或者0X开头的表示 16进制。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">20</span> <span class="comment">/*10进制*/</span></div><div class="line"><span class="number">024</span> <span class="comment">/*8进制*/</span></div><div class="line"><span class="number">0x14</span> <span class="comment">/*16进制*/</span></div></pre></td></tr></table></figure>
+<p>默认的浮点字面值是一个double ,当然了我们可以使用响应的后缀表示其他的类型。其表示方法是一个小数或者是科学计数法表示的指数，其中指数部分使用<code>E</code>或者<code>e</code>中的后缀来表示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">3.14159</span></div><div class="line"><span class="number">3.14159E0</span></div><div class="line"><span class="number">0.</span></div><div class="line"><span class="number">0e0</span></div><div class="line"><span class="number">.001</span></div></pre></td></tr></table></figure>
+<h3 id="字符和字符串字面值"><a href="#字符和字符串字面值" class="headerlink" title="字符和字符串字面值"></a>字符和字符串字面值</h3><p>用单引号括起来的一个字符称为是 char 型的字面值。</p>
+<p>双引号括起来的多个字符构成字符串字面值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="string">'a'</span> <span class="comment">/*字符字面值*/</span></div><div class="line"><span class="string">"Hello"</span> <span class="comment">/*字符串字面值*/</span></div></pre></td></tr></table></figure>
+<p>字符串的字面值实际上是由常量的字符构成的数组（array）,编译器后在每个字符串的结尾处加上一个空字符<code>\0</code>，因此，字符串字面值的长度比实际长度要小一位。</p>
+<p>如果两个字符串字面值相邻而且仅仅 由空格缩进和换行符分割，则它们实际上是一个整体当书写的字符串字面值比较长的时候，可以采取分开书写的方式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"a really ,really long string literal "</span></div><div class="line">  <span class="string">"that spans two lines"</span> &lt;&lt;<span class="built_in">std</span>::<span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<h3 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h3><p>有两种字符是不能够直接使用的，</p>
+<ol>
+<li>不可打印字符如退格符，或者其他控制字符（常用与数据通信控制）</li>
+<li>在C++中含有特殊含义的字符。</li>
+</ol>
+<p>这些情况下使用到转移序列，均以反斜杠开始，C++中的转义字符包括：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\n \t \a \v \b \<span class="string">" \' \\ \?  \r \f</span></div></pre></td></tr></table></figure>
+<h3 id="指定字面值的类型"><a href="#指定字面值的类型" class="headerlink" title="指定字面值的类型"></a>指定字面值的类型</h3><p>通过添加前缀或者是后缀可以改变整形，浮点型和字符型字面值的默认类型.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">L'a'   宽字符类型字面值， <span class="keyword">wchar_t</span></div><div class="line"><span class="string">u8"hi!"</span> utf<span class="number">-8</span> 字符串字面值</div><div class="line"><span class="number">42U</span>LL 无符号整形字面值，类型是 <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> </div><div class="line"><span class="number">1E-3</span>F 单精度的浮点型字面值， 类型是 <span class="keyword">float</span></div><div class="line"><span class="number">3.14159L</span>  类型是 <span class="keyword">long</span> <span class="keyword">double</span></div></pre></td></tr></table></figure>
+<p>指定字符字面值的类型：</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>含义</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u</td>
+<td>Unicode16</td>
+<td>char16_t</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unicode32</td>
+<td>char32_t</td>
+</tr>
+<tr>
+<td>L</td>
+<td>宽字符</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td>u8</td>
+<td>UTF-8</td>
+<td>char</td>
+</tr>
+</tbody>
+</table>
+<p>整形字面值：</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>最小匹配类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u or U</td>
+<td>unsigned</td>
+</tr>
+<tr>
+<td>l or L</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ll or LL</td>
+<td>long long</td>
+</tr>
+</tbody>
+</table>
+<p>浮点型字面值：</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f 或 F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>l 或 L</td>
+<td>long double</td>
+</tr>
+</tbody>
+</table>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><blockquote>
+<p>定义格式：  &lt;类型&gt;  变量名  [= 初始值] ;</p>
+</blockquote>
+<p>默认初始化：</p>
+<p>如果定义变量时没有指定初值，则变量被默认初始化。此时变量被赋予了默认值。如果内置类型的变量未被显式的初始化，它的值由定义的位置决定，定义于任何函数体之外的变量被初始化为0，<strong>一种例外情况是，定义在函数体内部的内置类型变量将不会被初始化。</strong> 一个未被初始化的内置类型变量的值是未定义的，如果试图copy或者以其他形式的访问此值将引发错误。</p>
+<p>每个类各自决定其初始化对象的方式，而且，是否允许不经初始化就定义对象也有类自己决定。如果类允许这种决定，它将决定类的对象的初始化到底是什么。</p>
+<h3 id="变量声明和定义的关系"><a href="#变量声明和定义的关系" class="headerlink" title="变量声明和定义的关系"></a>变量声明和定义的关系</h3><p>为了允许把程序拆分成多个逻辑部分来编写，C++支持分离式编译机制，允许将程序分割成若干个文件，每个文件可以被独立编译。</p>
+<p>如果将程序分为多个文件，则需要在 有文件间共享代码的方法，例如： 一个文件的代码可能需要使用另一个文件中定义的变量。</p>
+<p>为了支持分离式编译，C++将声明和定义分离开来，</p>
+<p>声明（declaration） 使得名字为程序所知，一个文件如果想要使用别处定义的名字则必须包含对那个名字的声明，而</p>
+<p>定义负责创建与名字关联的实体。</p>
+<p>变量声明规定了变量的类型和名字，在这一点上定义与之相同，<strong>但是除此之外，定义还申请存储空间，也可能够为变量赋一个初始值。</strong></p>
+<p>如果想声明一个变量而非定义它，就在变量名前添加关键词 extern 而且不要显式的初始化变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="keyword">int</span> i ;<span class="comment">//声明i 而非定义 i</span></div><div class="line"><span class="keyword">int</span> j ;<span class="comment">//声明定而非定义 j</span></div></pre></td></tr></table></figure>
+<p>包含了显式初始化的声明即成为定义。我们能够给 由 extern 关键词标记的变量赋的是一个初值。但是这么做也就是抵消了extern 的作用，extern 语句如果包含初始值就不再是声明，而变成了定义了。</p>
+<p>在函数体内部，如果试图初始化一个由 extern 关键词标记的变量，将引发错误</p>
+<h4 id="变量能且只能被定义一次，但是可以被多次声明。"><a href="#变量能且只能被定义一次，但是可以被多次声明。" class="headerlink" title="变量能且只能被定义一次，但是可以被多次声明。"></a>变量能且只能被定义一次，但是可以被多次声明。</h4><p>C++是一种静态类型语言（statically typed）语言，其含义是在编辑阶段检查类型，其中检查类型的过程称之为类型检查（type checking）</p>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>C++标识符由字符,数字和下划线组成，其中必须以字母或下划线开头，标识符的长度没有限制，但是对大小写字母敏感。</p>
+<ol>
+<li>标识符要能够体现实际意义</li>
+<li>变量名一般用小写字母，如 index ,不要使用 Index, INDEX</li>
+<li>用户自定义的类名一般以大写字母开头，如 Sales_item</li>
+<li>如果标识符由多个单词组成，则单词键要有明显的区分，如 student_loan 或者studentLoan, 不要使用 studentloan </li>
+</ol>
+<h3 id="名字的作用域"><a href="#名字的作用域" class="headerlink" title="名字的作用域"></a>名字的作用域</h3><p>不论在程序的什么位置，使用到每个名字都会指向一个特定的实体，变量，函数，类型等，同一个名字出现杂程序的不同的位置，也可能指向的是不同尸体。</p>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p>是程序的一部分，在其中名字有其特定的含义，C++中大多数作用域以花括号分隔</p>
+<p>同一个名字在不同的作用域中可能指向不同的实体，名字的有效区域始于名字的声明语句，以声明语句所在的作用 域末端为结束。</p>
+<h4 id="嵌套的作用域："><a href="#嵌套的作用域：" class="headerlink" title="嵌套的作用域："></a>嵌套的作用域：</h4><p>作用域能彼此包含，被包含（或者被说被嵌套）的作用域被称为内层作用域，包含着别的作用域的作用域称为外层作用域（outer scope）</p>
+<h4 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h4><p>复习类型是基于其他类型定义的类型，C++中有很多的数学类型，典型的两种：指针，引用</p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><p>严格来说，当我们使用引用，引用（reference）为对象起了另外一个名字，引用类型引用(refers to) 另外 一种类型，通过将声明写成 &amp;d 的形式来定义引用类型，其中d是声明的变量名</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">1024</span>;</div><div class="line"><span class="keyword">int</span> &amp;refval = ival; refVal 指向ival(是ival另外一个名字)</div><div class="line"><span class="keyword">int</span> &amp;refval2 ; <span class="comment">//报错，引用必须被初始化</span></div></pre></td></tr></table></figure>
+<p>一般在初始化变量时，初始值会被copy到新建的对象中，然而定义引用的时候，程序把引用和它的初始值 bind绑定在一起，而不是将初始值copy给引用，一旦初始化完成，引用将和它的初始对象一直绑定在一起。 因此无法令 引用重新绑定到另外一个对象，因此引用必须初始化</p>
+<p>引用即别名：</p>
+<p>引用并非对象，相反的，它只是为一个已经存在的对象所起的另外一个名字。</p>
+<p>定义了一个引用之后，对其进行的所有的操作都是在与之绑定的对象进行的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">refVal = <span class="number">2</span>; <span class="comment">//把2赋给refVal 指向的对象，此处即使赋给了ival;</span></div><div class="line"><span class="keyword">int</span> li = reVal ;<span class="comment">//与 li = ival 执行结果一样</span></div></pre></td></tr></table></figure>
+<p>为引用赋值，实际上是把赋值给了与引用绑定的对象，获取引用的值，实际上是获取了去了与引用绑定的对象的值，同理，以引用作为引用值，实际上是以与引用绑定的对象作为初始值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> &amp;refVal3 = reVal;</div><div class="line">正确： refVal3 绑定到了那个与refVal 绑定的对象，这里就是绑定到 ival上。</div><div class="line"><span class="keyword">int</span> i = refVal ;<span class="comment">//正确：i被初始化为 ival 的值。</span></div></pre></td></tr></table></figure>
+<p>因为引用本身不是一个对象，所以不能够定义为 引用的 引用。</p>
+<p>引用的定义：</p>
+<p>允许在一条语句中定义多个引用，其中每个标识符都必须以符号&amp;开头。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">1024</span> , i2 = <span class="number">2048</span> ; i1 和 i2 都是  <span class="keyword">int</span></div><div class="line"><span class="keyword">int</span> &amp;r = i; r2= i2;  r是一个引用，与i绑定在一起，r2 是<span class="keyword">int</span> </div><div class="line"><span class="keyword">int</span> i3 = <span class="number">1024</span>, &amp;ri = i3;  i3 是<span class="keyword">int</span> ,ri 是一个引用，与i3 绑定在一起</div><div class="line"><span class="keyword">int</span> &amp;r3 = i3; &amp;r4 = i2; r3 和 r4 都是引用。</div></pre></td></tr></table></figure>
+<p>将要介绍的介绍的两种例外的情况，其他所有的引用的类型都要与与之绑定的对象严格匹配，而且，引用只能绑定在对象上，而不能与字面值或某个表达式的计算结果绑定在一起。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> &amp;refVal4 = <span class="number">10</span> ;错误，引用类型的初始值必须是一个对象</div><div class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;</div><div class="line"><span class="keyword">int</span> &amp;refVal5 = dval ; <span class="comment">//错误： 此处引用类型的初始值必须是int型对象</span></div></pre></td></tr></table></figure>
+<h4 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h4><p>指针 pointer 是指向 point to 另外一种类型的符合类型，与引用类似，指针也实现了对其他对象的间接访问，然而指针与引用相比又有很多的不同点，其一，指针本身也就是一个对象，允许对指针赋值和copy,而且在指针的生命周期内它可以先后指向几个不同的对象。其二，指针无需在定义时赋值，和其他内置类型一样，这块作用域内定义的指针如果没有被初始化，也将拥有一个不确定的值。</p>
+<p>定义指针类型的方法将声明符写成<em>d的形式，其中 d 是变量名，如果在一条语句中定义了几个指针变量，每个变量前面必须有符号 </em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span>  * ip1 , * ip1 ; ip1 和 ip2 都是指向 <span class="keyword">int</span> 型对象的指针</div><div class="line"><span class="keyword">double</span> dp , * dp2 ; dp2 是指向<span class="keyword">double</span>型对象的指针中，dp 是<span class="keyword">double</span> 型对象</div></pre></td></tr></table></figure>
+<h3 id="获取对象的地址"><a href="#获取对象的地址" class="headerlink" title="获取对象的地址"></a>获取对象的地址</h3><p>指针存放某个对象的地址，要想获取该地址，需要使用 <strong>取地址符</strong>(操作符 &amp;)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</div><div class="line"><span class="keyword">int</span> *p = &amp;ival ; <span class="comment">//p 存放变量ival的地址，或说p 是真相变量 ival 的指针</span></div></pre></td></tr></table></figure>
+<p>所有的指针类型都要和它所指向的对象严格匹配：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> dval ;</div><div class="line"><span class="keyword">double</span> *pd = &amp;dval ; </div><div class="line"><span class="keyword">double</span> *pd2 = pd; </div><div class="line"><span class="keyword">int</span> *pi = pd; 错误，指针p的类型和pd的类型不匹配</div><div class="line">pi = &amp;dval ; 错误，视图吧<span class="keyword">double</span> 类型的指针赋值给<span class="keyword">int</span>型指针。</div></pre></td></tr></table></figure>
+<p>一个指针的值（即地址）应该满足一下四种状态之一：</p>
+<ol>
+<li>指向一个对象</li>
+<li>指向紧邻对象向所占有空间的下一个位置。</li>
+<li>空指针，指针没有指向任何对象</li>
+<li>无效指针，上述情况之外的其他值</li>
+</ol>
+<p>视图去copy或者访问无效指针的值都会引发错误，编译器不会检查此类错误这一点和视图使用未经过初始化的变量是一样的，</p>
+<p>####利用指针访问对象</p>
+<p>如果访问了一个对象，则允许使用解引用符(操作符 *)来访问对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> ival = <span class="number">42</span>;</div><div class="line"><span class="keyword">int</span> *p = &amp;ival ; p 存放着变量 ival 的地址，或者说 p 是指向变量 ival的指针</div><div class="line"><span class="built_in">cout</span>&lt;&lt; *p ; 由符号 * 得到指针p 所指向的队形，输出 <span class="number">42</span>；</div><div class="line">*p = <span class="number">0</span>;  有符号 * 得到指针 p 所指的对象，即可经由p为变量 ival 赋值</div><div class="line"><span class="built_in">cout</span> &lt;&lt; *p; 输出 <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>当引用操作仅仅适用于那些确实指向了某个对象的有效指针</p>
+<h4 id="空指针"><a href="#空指针" class="headerlink" title="空指针"></a>空指针</h4><p>空指针（null pointer） 不指向任何对象，在试图使用一个指针之间代码可以首先检查它是否为空，以下列出几个生成空指针的方法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>;  等价于 <span class="keyword">int</span> *p1 = <span class="number">0</span>;</div><div class="line"><span class="keyword">int</span> *p2 = <span class="number">0</span>;  直接将p2初始化为字面常量 <span class="number">0</span></div><div class="line"><span class="keyword">int</span> *p3 = <span class="literal">NULL</span> ; 等价于 <span class="keyword">int</span> *p3 = <span class="number">0</span>;</div></pre></td></tr></table></figure>
+<p>得到空指针的最直接的方法是用字面值 nullptr 来初始化指针，这也是 C++11标准最新引入的一种方法，nullptr 是一种特殊类型的字面值。 他可以转换为任意其他类型的指针，另一种方法试试可将指针初始化为 0 来生成空指针。</p>
+<p>过去的程序还会用到一个名为 NULL 的预处理变量，（preprocessor variable）来个指针赋值，这个变量在头文件 <code>cstdlib</code>中的定义，它的值就是 0</p>
+<p>但是需要知道的是，尽管我们说 nullptr 和NULL 它在定义时值确实是0，但是我们一定要知道的是，将 int 变量的值恰好等于0也不行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> zero = <span class="number">0</span>;</div><div class="line">pi = zero; <span class="comment">//错误：不能把int 变量直接赋给指针</span></div></pre></td></tr></table></figure>
+<h4 id="复制和指针"><a href="#复制和指针" class="headerlink" title="复制和指针"></a>复制和指针</h4><p>指针和引用都能提供对其他对象的简介访问，然而在具体是实现细节上二者有很大的不同，其中最重要的一点就是引用本身并非一个对象，一旦定义了引用，就无法令其再绑定到另外的对象。之后每次访问这个引用都是直接访问它最初的对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">42</span>; </div><div class="line"><span class="keyword">int</span> *pi = <span class="number">0</span> ; pi被初始化，没有指向任何对象</div><div class="line"><span class="keyword">int</span> *pi2 = &amp;i; </div><div class="line"><span class="keyword">int</span> *pi3 ; pi3 定义与块内，则pi3的值是无法确定的。</div><div class="line">pi3 = pi2; pi3 和 pi2 指向同一个对象 存有 i 的地址</div><div class="line"><span class="keyword">int</span> *pi3 ; 如果pi3 定义与快内，则 pi3 的值是无法确定的</div><div class="line">pi3 = pi2; pi3 和 pi2 指向同一个对象</div><div class="line">pi2 = <span class="number">0</span> ; 现在 pi2 不指向任何对象了</div></pre></td></tr></table></figure>
+<p>有时候要搞清楚一条赋值语句到底是改变了指针的值还是改变了指针所指向的对象的值不太容易，最好的方法就是记住赋值永远改变的是等号左侧的对象。</p>
+<p>当我们写出如下的语句的时候，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pi = &amp;ival ; pi 的值会改变，现在pi指向了 ival </div><div class="line">*pi = <span class="number">0</span>  ; ival 的值会被该表，指针 pi 并没有改变</div></pre></td></tr></table></figure>
+<h4 id="其他的指针操作"><a href="#其他的指针操作" class="headerlink" title="其他的指针操作"></a>其他的指针操作</h4><p>对于两个类型相同的合法指针，就可以把它用在条件表达式中，和采用算术值作为条件遵循的规律类似，如果指针的值为0，条件 为false ,非0 ，true</p>
+<p>对于类型相同的合法指针，可以使用相等的 <code>==</code>和 不等<code>==</code>操作符来比较他们比较的结果是bool.</p>
+<h4 id="void-指针"><a href="#void-指针" class="headerlink" title="void * 指针"></a>void * 指针</h4><p>void*是一种特殊的指针类型，可以用于存放任意对象的地址，一个指针存放地址这一单和其他的指针类似，不同的是，我们对该地址中到底是一个什么类型的对象并不了解。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> obj = <span class="number">3.14</span>, *pd = &amp;obj;</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; 正确，<span class="keyword">void</span> * 能够存放任意类型的对象</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; obj可以是任意类型你的对象。</div><div class="line">pv = pd; pv 可以存放任意类型的指针</div></pre></td></tr></table></figure>
+<p>利用void<em> 指针所能够做的事情比较有限，那他和别的指针比较，作为函数的输入和输出，后者复制为另外一个void</em> 指针，不能够直接操作 void* 所指向的对象，因为无法确定这个对象是什么类型。 也就无从得知要怎么操作这个对象</p>
+<p>概括说来，void* 视角来看吗内存空间也就仅仅是内存空间，无法访问内存空间中的对象。当然我们也可以考虑对它进行转型，但是现在暂时不会讨论这个问题。</p>
+<p>注： 以上所有内容为个人学习 C++ primer 所作的笔记。仅仅用于学习交流之用，不可以用于任何商业用途。如果想要获取更多的内容，请购买正版书籍。 </p>
+<p>同时，主页的RESOURCES 内提供了一个PDF版本可以参考使用。</p>
+
+                
+
+
+<p class="red-link-context">
+    <a href="/2017/11/03/SimpleJavaSwing2/" rel="next" title="Java简单的图形界面设计(二)布局管理器">
+    下一篇：Java简单的图形界面设计(二)布局管理器
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large red darken-4">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect pink darken-4" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse prange lighten-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer red darken-4 darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/eachannlee" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright red-link-context">
+        <div class="container">
+            © 2017 elemtype.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('brown lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge red darken-4"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
