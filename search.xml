@@ -3,6 +3,122 @@
   
     
     <entry>
+      <title><![CDATA[C++学习笔记（四）]]></title>
+      <url>/2017/11/05/CppNotes_4/</url>
+      <content type="html"><![CDATA[<p>C++ 字符串 C++ string 标准库</p>
+<a id="more"></a>
+<p>###命令空间的 <code>using</code>声明</p>
+<p>我们常用到的库函数基本上属于命名空间 <code>std</code>，例如：<code>std::cin</code>从标准输入中读取内容。使用作用域操作符 (<code>::</code>)的含义，编译器应该从操作符左侧名字中所示的作用域中寻找右侧那个名字。 因此，<code>std::cin</code>的意思就是使用命名空间 <code>std</code>中的名字 <code>cin</code>.</p>
+<p>一种简单的方法可以使用命名空间中的成员，使用 <code>using</code>声明。</p>
+<p>使用了 <code>using</code>就无需声明专门的前缀，形如<code>::</code>，也能够使用所需的名字了。</p>
+<p>using 声明的形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span>::name ;</div></pre></td></tr></table></figure>
+<p>一旦声明了上述语句，我们可以直接访问命名空间的名字</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">int</span> i ; </div><div class="line">    <span class="built_in">cin</span> &gt;&gt; i;  正确，<span class="built_in">cin</span> 和 <span class="built_in">std</span>::<span class="built_in">cin</span> 含义相同</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; i; 错误，没有对应的<span class="keyword">using</span>声明，必须使用完整名字</div><div class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; i; 正确，显示的从 <span class="built_in">std</span> 中使用 <span class="built_in">cout</span></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="每个名字都需要独立的using声明"><a href="#每个名字都需要独立的using声明" class="headerlink" title="每个名字都需要独立的using声明"></a>每个名字都需要独立的using声明</h3><p>每个using声明引入命名空间中的一个成员。 可以把要用到的标准库中的名字都以 using 声明的形式表示出来。 </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</div><div class="line"><span class="keyword">using</span> sed::<span class="built_in">cout</span> ; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt; <span class="string">"Enter two numbres: "</span>&lt;&lt; <span class="built_in">endl</span> ;</div><div class="line">  	<span class="keyword">int</span> v1,v2;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; v1 &gt;&gt;v2;</div><div class="line">  	<span class="built_in">cout</span>&lt;&lt; v1 &lt;&lt;<span class="string">" "</span>&lt;&lt; v2;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="头文件不能够包含-using声明"><a href="#头文件不能够包含-using声明" class="headerlink" title="头文件不能够包含 using声明"></a>头文件不能够包含 <code>using</code>声明</h3><p>头文件的代码不应该使用 using 声明，只是因为头文件的内容会copy到所有引用它的文件中去，如果头文件中有某个 using 声明，那么每个使用了该头文件的都会有这个声明。 对于某些程序来收，由于不经意间包含了某些名字，会出现一些问题。</p>
+<h2 id="标准库类型-string"><a href="#标准库类型-string" class="headerlink" title="标准库类型 string"></a>标准库类型 <code>string</code></h2><p>标准库类型 <code>string</code>表示可变长的字符序列，使用<code>string</code>类型必须首先包含<code>string</code>头文件，作为标准库的一部分，<code>string</code>定义在命名空间 <code>std</code>，接下来的实例假定已经包含了下述代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</div></pre></td></tr></table></figure>
+<h2 id="常用的-string操作"><a href="#常用的-string操作" class="headerlink" title="常用的 string操作"></a>常用的 <code>string</code>操作</h2><h3 id="定义和初始化-string对象"><a href="#定义和初始化-string对象" class="headerlink" title="定义和初始化 string对象"></a>定义和初始化 <code>string</code>对象</h3><p>如何初始化对象是由类本身决定的。 一个类可以定义多种初始化对象的方式，只不过这些方式之间必须有所区别，或者是初始值的数量不同，或者是初始值的类型不同。 </p>
+<p>string 初始化的常用方式：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s1 ; 默认的初始化，s1 是一个空字符串</div><div class="line"><span class="built_in">string</span> s2 = s1 ; s2 是 s1的副本</div><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(s1)</span> </span>; s2 是 s1 的副本</div><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(<span class="string">"value"</span>)</span></span>; s4 是 <span class="string">"value"</span>的副本 </div><div class="line"><span class="built_in">string</span> s5 = <span class="string">"hiya"</span>; a2 是该字符串字面值的副本</div><div class="line">string s4(10,'c') s4 的内容是 "cccccccccc"</div></pre></td></tr></table></figure>
+<p>通过默认的方式初始化一个 string ,将会得到一个空的 string 也就是说，该 string 对象中没有任何字符</p>
+<h3 id="直接初始化-和拷贝初始化"><a href="#直接初始化-和拷贝初始化" class="headerlink" title="直接初始化 和拷贝初始化"></a>直接初始化 和拷贝初始化</h3><p>C++有几种不同的初始化方式，通过 string 我们可以清楚地看到在这些初始化方式，通过 string 的初始化，我们可以看清楚各种不同的初始化方式之间的区别和联系</p>
+<ol>
+<li>如果使用等号（=）初始化一个变量，实际上执行的拷贝初始化，编译器将等号右边的初始值直接copy到新创建的对象中去。</li>
+<li>如果不使用等号，则执行的是直接初始化</li>
+</ol>
+<p>当初始化值只有一个的时候，使用直接初始化或者copy初始化都行。如果要初始化的值有很多个，一般来说都是用直接初始化的方式。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s5 = <span class="string">"hiya"</span>; copy initialization </div><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s6</span><span class="params">(<span class="string">"hiya"</span>)</span></span>; 直接初始化</div><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s7</span><span class="params">(<span class="number">10</span>,<span class="string">'c'</span>)</span></span>; 直接初始化</div></pre></td></tr></table></figure>
+<p>对于多个值进行初始化的情况，非要copy初始化的方式 也不是不可以，不过要显示的创建一个临时的对象用于copy</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s8 = <span class="built_in">string</span>(<span class="number">10</span>,<span class="string">'c'</span>); copy 初始化，</div></pre></td></tr></table></figure>
+<p>这句话本质上可以写成</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">temp</span><span class="params">(<span class="number">10</span>,<span class="string">'c'</span>)</span></span>;</div><div class="line"><span class="built_in">string</span> s9 = temp;</div></pre></td></tr></table></figure>
+<h3 id="string对象上的操作"><a href="#string对象上的操作" class="headerlink" title="string对象上的操作"></a>string对象上的操作</h3><p>string对象中的大多数操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">os os&lt;&lt;s 将s写到输出流os中，返回os</div><div class="line">is is&gt;&gt;s 从is中读取字符串赋值给 s,字符串以空白分割，返回is</div><div class="line">bool getline(is,s) s为空返回true,否则返回false</div><div class="line"> s.size() 返回s中字符的对象</div><div class="line"> s[n] 返回s中第n个字符的引用，n 从<span class="number">0</span>记起</div><div class="line"> s1+s2 返回s1和s2连接后的结果</div><div class="line"> s1 = s2 s2的副本代替s1中原来的字符 </div><div class="line"> s1==s2 判断s1和s2中的字符是否完全 一样</div><div class="line"> s1 != s2</div><div class="line"> &lt;,&lt;=,&gt;,&gt;= 利用字符在字典中的顺序进行比较，且对字母的大小写敏感</div></pre></td></tr></table></figure>
+<h3 id="读写-string-对象"><a href="#读写-string-对象" class="headerlink" title="读写 string 对象"></a>读写 string 对象</h3><p>可以使用 iostream 来读写int,double 等内置类型的值，同样也可以使用io操作读写string对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="built_in">string</span> s;</div><div class="line">    <span class="built_in">cin</span> &gt;&gt; s;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>读取未知数量的string 对象：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="built_in">string</span> word;</div><div class="line">    <span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt;word)</div><div class="line">      <span class="built_in">cout</span>&lt;&lt;word&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用-getline-读取一整行"><a href="#使用-getline-读取一整行" class="headerlink" title="使用 getline 读取一整行"></a>使用 getline 读取一整行</h3><p>有时候我们希望在所得到的字符串中保留输入时的空白值，这时应该用 getline()函数代替原来的 &gt;&gt;运算，getline() 的参数是一个输入流和一个string 对象，函数从给定的输入流中读取内容直至遇到换行符位置，然后把所读的内容存入到string对象中去（注意不包括换行符）</p>
+<p>和输入运算符一样，getline()也返回它的流参数.因此既然输入运算符能够作为新的条件，我们也能够使用 getline() 运算符的结果作为条件，例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">     <span class="built_in">string</span> line;</div><div class="line">     <span class="keyword">while</span>(getline(<span class="built_in">cin</span>,line))</div><div class="line">       <span class="built_in">cout</span> &lt;&lt;line &lt;&lt;<span class="built_in">endl</span>;</div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="string-的-empty和-size操作"><a href="#string-的-empty和-size操作" class="headerlink" title="string 的 empty和 size操作"></a>string 的 empty和 size操作</h3><p>empty 根据string 对象是否为空返回一个对应的布尔值</p>
+<p>我们可以改写之前的程序，可以做到只输入非空的行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> (getline(<span class="built_in">cin</span>,line))</div><div class="line">  <span class="keyword">if</span>(!line.empty())</div><div class="line">    <span class="built_in">cout</span>&lt;&lt; line &lt;&lt;<span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<p>size 函数返回string对象的长度（即string对象中字符的个数），可以使用size函数只输出长度超过 80 个字符的行</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> line ;</div><div class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,line))</div><div class="line">  <span class="keyword">if</span>(line.size() &gt;<span class="number">80</span>)</div><div class="line">     <span class="built_in">cout</span>&lt;&lt;line &lt;&lt;<span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<p>它会从cin中读取输入直到遇到EOF，</p>
+<blockquote>
+<p>Linux下EOF的输入方式是ctrl+d Windows 下的EOF是 ctrl +Z</p>
+</blockquote>
+<h3 id="string-size-type-类型"><a href="#string-size-type-类型" class="headerlink" title="string::size_type 类型"></a>string::size_type 类型</h3><p>对于size() 来收，返回一个int或者是一个unsigned 似乎都是合情合理的，但是其实size()返回的是一个 <code>size_type</code>类型的值，</p>
+<p>string 类以及其他大多数标准库类型都定义了几种配套的类型，这些配套的类型体现了标准库类型与机器无关的特性，类型 size_type 就是其中的一种，在具体使用的时候，通过作用域可以存放string类的size函数，返回值的变量，都应该是</p>
+<p><code>string::size_type</code>的对象，</p>
+<p>在C++11中，编译器中通过 auto 或者 decltype 来推断 变量的类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> len = line.size() ; <span class="comment">//len 的类型是 string::size_type;</span></div></pre></td></tr></table></figure>
+<p>size 函数返回是一个无符号的整数，因此，如果在表达式中混用了带符号的整数和无符号的整数都可能产生 意想不到的结果，例如： n是一个具有负数的int ,则表达式a.size() &lt;n 的结果几乎坑定是true. 这是因为负值会自动的转换成 一个比较大的无符号的值。</p>
+<blockquote>
+<p>如果一个表示式中已经有了size()函数就不要在使用 int,这样可以避免混用int和unsigned可能带来的问题</p>
+</blockquote>
+<h3 id="两个string对象相加"><a href="#两个string对象相加" class="headerlink" title="两个string对象相加"></a>两个string对象相加</h3><p>两个string对象相加会得到一个新的string对象，其内容是吧左侧的运算对象和右侧的运算对象串接而成，此外符合赋值运算符（+=）将右侧的string对象的内容追加到 左侧的string对象的后面。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s1 = <span class="string">"Hello, "</span>, s2 = <span class="string">"world\n"</span>;</div><div class="line"><span class="built_in">string</span> s3 = s1+s2;</div><div class="line">s1+=s2;</div></pre></td></tr></table></figure>
+<h3 id="字面值和string对象相加"><a href="#字面值和string对象相加" class="headerlink" title="字面值和string对象相加"></a>字面值和string对象相加</h3><p>即使一种类型并非所需，我们也可以使用它，不过前提是这种类型可以自动的转换成所需的类型，标准库允许吧字符字面值，字符串字面值转化成string对象。</p>
+<p>需要string对象的地方可以使用这种两种字面值来替代，利用这一点将之前的程序改写为如下形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s1 = <span class="string">"hello"</span>, s2 = <span class="string">"world"</span>;</div><div class="line"><span class="built_in">string</span> s3 = s1+<span class="string">", "</span>+ s2 +<span class="string">"\n"</span>;</div></pre></td></tr></table></figure>
+<p>当string对象和字符字面值以及字符串字面值混在一条语句中使用时，必须确保每个加法运算（+）两侧的对象至少有一个是string。</p>
+<p>注意一定有一个是string对象，而不是 字面值，不能够将字面值直接相加</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">string</span> s1 = <span class="string">"hello"</span>;</div><div class="line"><span class="built_in">string</span> s6 = s1+<span class="string">", "</span>+<span class="string">"world"</span>;<span class="comment">//错误的，字面值不是string,不能够将两个字面值直接相加。 （后一个加法）</span></div><div class="line">应该写成：</div><div class="line"><span class="built_in">string</span> temp = s1 +<span class="string">", "</span>;</div><div class="line"><span class="built_in">string</span> s6 = temp+<span class="string">"world"</span>;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是，由于为了和C兼容，C++语言字符串字面值并不是标准库类型string对象，切记，字符串字面值与 string 是不同的类型。</p>
+</blockquote>
+<h2 id="处理string对象中的字符："><a href="#处理string对象中的字符：" class="headerlink" title="处理string对象中的字符："></a>处理string对象中的字符：</h2><p>我们经常会处理string对象中的字符，比如检查一个string对象是否包含空白，或者把string对象中的字母改成小写，查看特定的字符是否出现等。</p>
+<p>这类处理的一个关键问题是如何获取字符本身，有些时候需要处理string对象中的每一个字符，另外一些情况下只需要处理某个特定的字符，这些时候遇到某个条件处理就要停下来。这些操作通常需要处理语言和库的很多方面。‘</p>
+<p>另一个关键词问题是要能改变某个字符的特性，在 <code>cctype</code> 头文件中定义了一组标准库函数处理这部分工作，列出了主要的函数名极其定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">cctype 头文件中的函数</div><div class="line"><span class="built_in">isalnum</span>(c) 当c是字母或者数字时为真</div><div class="line"><span class="built_in">isalpha</span>(c) 当c是字母是为真</div><div class="line"><span class="built_in">iscntrl</span>(c) 当c是控制字符时为真</div><div class="line"><span class="built_in">isdigit</span>(c) 当c是数字时为真</div><div class="line"><span class="built_in">isgraph</span>(c) 当c不是空格但可以打印时为真</div><div class="line"><span class="built_in">islower</span>(c) 当c是小写字母时为真</div><div class="line"><span class="built_in">isprint</span>(c) 当c是可打印字符时为真，</div><div class="line"><span class="built_in">ispunct</span>(c) 当c是标点符号时为真</div><div class="line"><span class="built_in">isspace</span>(c) 当c空白时为真</div><div class="line"><span class="built_in">isupper</span>(c) 当c是大写字符时为真</div><div class="line"><span class="built_in">isxdigit</span>(c) 当c是十六进制时为真</div><div class="line"><span class="built_in">tolower</span>(c) 如果c是大写字符，输出对应的小写字母，否则原样输出</div><div class="line"><span class="built_in">toupper</span>(c) 如果c是小写字符，输出对应的大写字母，否则原样输出</div></pre></td></tr></table></figure>
+<p>建议c++版本的c标准库头文件，C++标准中除了定义C++语言的功能之外，也兼容了C语言的标准库，C语言的头文件形如 <code>name.h</code>，C++则将这些文件命名为<code>cname</code> 也就是说去掉了<code>.h</code>后缀，而在文件名<code>name</code>之前添加了字母c,这里的c表示这是一个属于C语言标准库的头文件。</p>
+<p>因此， <code>cctype</code>头文件和<code>ctype.h</code>头文件的内容都是一样的，只不过通过命名规范来讲更加符合C++的语言的要求。 特别是在名为<code>cname</code>的头文件中定义的从属于命名空间 <code>std</code>而定义在名为<code>.h</code>的头文件中的则不然</p>
+<h3 id="处理每个字符，使用基于范围的for语句"><a href="#处理每个字符，使用基于范围的for语句" class="headerlink" title="处理每个字符，使用基于范围的for语句"></a>处理每个字符，使用基于范围的for语句</h3><p>最好的方法是使用C++11新标准中提供的一条语句：</p>
+<p>范围 for(range for)语句。</p>
+<p>这种语句遍历给定序列中的每个元素并且对序列中的每个值执行某种操作。</p>
+<p>语法格式： </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>( declaraton : expression)</div><div class="line">   statement</div></pre></td></tr></table></figure>
+<p>其中，expression 部分是一个对象，用于表示一个序列，declaration部分负责定义一个变量，该变量将被用于访问序列中的基础元素，类似于Java中的for-each循环。</p>
+<p>一个string对象表示一个字符的序列，因此string对象可以作为范围for语句中的expression部分，使用for循环将string对象中的字符一个接一个打印出来。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"some string"</span>)</span></span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> c: str)</div><div class="line">  <span class="built_in">cout</span>&lt;&lt; c &lt;&lt;<span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<p>使用for(range for)改变字符串中的字符</p>
+<p>如果想要改变字符串中的字符的值，必须把循环变量定义成引用类型，记住，所谓引用只是给定对象的一个别名，因此使用引用作为循环控制变量的时候，这个变量实际上一次被绑定到了每个序列的每个元素上，使用这个引用，改变它绑定的字符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hello,world!"</span>)</span></span>;</div><div class="line"><span class="keyword">for</span>( <span class="keyword">auto</span> &amp;c : s)</div><div class="line">  c = <span class="built_in">toupper</span>(c);</div><div class="line"><span class="built_in">cout</span> &lt;&lt; s&lt;&lt; <span class="built_in">endl</span>;</div></pre></td></tr></table></figure>
+<p>输出的结果为： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HELLO,WORLD!</div></pre></td></tr></table></figure>
+<h3 id="只处理一部分字符："><a href="#只处理一部分字符：" class="headerlink" title="只处理一部分字符："></a>只处理一部分字符：</h3><p>可以使用下标或者迭代器，我们现在只介绍下标。</p>
+<p>下标运算符：（[]）接受的输入参数是 string::size_type 类型的值，这个参数表示将会访问的字符的位置，返回值是该位置的上字符的引用。</p>
+<p>string 对象的下标从0开始，如果string 对象s至少包含两个字符，s[0]是第一个字符，s[s.size()-1]是最后 一个字符。</p>
+<blockquote>
+<p>string 对像的下标必须大于0而小于s.size()</p>
+<p>使用超出此范围的下标将会引发不可预知的后果。由此推断，使用下标访问空string 也会引发不可预知的结果。和Java 会抛出越界异常不同，C++标准并不要求标准库检测下标是否合法，因此检查它是否合法的任务就必须由我们自己来完成。</p>
+</blockquote>
+<p>使用下标访问的方式和数组访问类似.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"hello world"</span>)</span></span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">decltype</span>(s.size()) ) index = <span class="number">0</span>;index != s.size() &amp;&amp; ！<span class="built_in">isspace</span>(s[index]); ++index)</div><div class="line">   s[index] = <span class="built_in">toupper</span>(s[index]);</div><div class="line">将当前的字符串的第一个单词改成大写形式：</div><div class="line">  input: HELLO world</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> -Cpp </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Cpp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习笔记(三) 类型]]></title>
       <url>/2017/11/05/CppNotes_3/</url>
       <content type="html"><![CDATA[<p>类型别名 ，auto ， decltype 关键词，自定义数据结构</p>
