@@ -3,8 +3,115 @@
   
     
     <entry>
+      <title><![CDATA[C++学习笔记(三) 类型]]></title>
+      <url>/2017/11/05/CppNotes_3/</url>
+      <content type="html"><![CDATA[<p>类型别名 ，auto ， decltype 关键词，自定义数据结构</p>
+<a id="more"></a>
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><p>类型别名仅仅是 一个名字，它是某种类型的同义词，使用类型别名的好处在于，使复杂的类型名字简单明了，易于理解和使用。</p>
+<p>定义类型别名的两种方式：</p>
+<ol>
+<li><p>传统的方法是使用关键词： <code>typedef</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages ; wages 是<span class="keyword">double</span>的同义词</div><div class="line"><span class="keyword">typedef</span> wages base, *p ; base 是<span class="keyword">double</span>类型的变量，p 是<span class="keyword">double</span>指针。</div></pre></td></tr></table></figure>
+</li>
+<li><p>C++新标准规定了有一种方法，使用别名声明（alias declaration）来定义类型的别名</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">using</span> SI = Sales_items ; <span class="comment">// SI 是 Sales_item 的同义词</span></div></pre></td></tr></table></figure>
+<p>这种方法规定了 <code>using</code>作为别名声明的开始，其后紧跟着别名和等号。作用是将等号左边的名字规定成等号右侧类型的别名</p>
+</li>
+</ol>
+<h3 id="指针、常量和类型别名"><a href="#指针、常量和类型别名" class="headerlink" title="指针、常量和类型别名"></a>指针、常量和类型别名</h3><p>如果某个类型别名指代的是复合类型或变量，MAME吧它用到声明语句里就会产生一些意想不到的后果。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *pstring ;</div><div class="line"><span class="keyword">const</span> pstring cstr = <span class="number">0</span>; cstr 是指向<span class="keyword">char</span>的常量指针</div><div class="line"><span class="keyword">const</span> pstring *ps ; ps 是一个指针，它的对象会指向 <span class="keyword">char</span>的常量的指针。</div></pre></td></tr></table></figure>
+<p>上面的两条语句的基本数据类型都是 const pstring 和过去一样：</p>
+<p>但是，pstring 是指向 char 的指针。 所以 const pstring 就是指向 char的常量指针，而不是执行常量的字符的指针。 </p>
+<p>这里的说法似乎有些拗口，简单来说，就是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pstring 不是<span class="keyword">char</span> 的别名，而是指向<span class="keyword">char</span>的指针类型的别名。</div><div class="line"><span class="keyword">const</span> pstring   cstr 的实际意义是 指向<span class="keyword">char</span>类型的常量指针。</div><div class="line"><span class="keyword">const</span> pstring *ps  指向（<span class="keyword">char</span>类型的）指针 的常量指针。</div></pre></td></tr></table></figure>
+<p>实际上，它确实很容易让人发生错误，因此我们在定义的时候不得不小心一点，从这一点来看，我们的生命采用前一种的方法似乎会更好一些</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span>* pstring ;</div></pre></td></tr></table></figure>
+<p>相比前面的定义，这样的话似乎更容易使人们注意到 pstring类型的实际意义，但是，这种小技巧并不能够解决定义指针的别名时让人混淆的问题。 对此我们只有在编写别名的时候注意尽量避免这种方式。我个人的习惯是在指针别名的时候，在别名后特意加一个<code>_ptr</code>，虽然看起来不是很美观，但某种意义上可以让自己注意到它是一个指针而不是简单的类型。像上述的命名我会写成</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> * number_ptr;</div></pre></td></tr></table></figure>
+<p> 但是，这种蹩脚的做法有时候并不是一个很好的主意。例如我们之前举到的例子中，我们知道string 本身就是一个指向char的指针。如果我们写成：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *string_ptr;</div></pre></td></tr></table></figure>
+<p>不仅仅很蹩脚，而且令人难以理解。</p>
+<p>所以，具体采用什么方式，只好靠自己的判断了。但是，对于使用指针类型的别名，请一定要非常小心。</p>
+<h3 id="auto类型说明符"><a href="#auto类型说明符" class="headerlink" title="auto类型说明符"></a>auto类型说明符</h3><p>C++11新标准引入了 auto 类型的说明符，可以让编译器替我们去分析表达式所属的类型，和原来那种指定义一种特定类型的说明符，auto 通过让编译器通过初始值来推算变量的类型，显然，auto 定义的变量必须有初始值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> item = val1+val2 ;<span class="comment">//可以让item初始化为 val1 ,val2相加的结果</span></div></pre></td></tr></table></figure>
+<p>例如 如果 val1和val2 都是double , 那么 item的值可以被定义为 double </p>
+<p>使用 auto 也可以在一条语句中声明为多个变量，因为一条声明语句只能够有一个基本数据类型，所以，该语句中所有变量的初始和基本数据类型都必须一样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> i = <span class="number">0</span> , *p = &amp;i; i 是<span class="keyword">int</span> ,p 是 <span class="keyword">int</span> 指针</div><div class="line"><span class="keyword">auto</span> sz = <span class="number">0</span> , pi = <span class="number">3.14</span> ; 这样是错误的，sz 和 pi 的类型不一致</div></pre></td></tr></table></figure>
+<h3 id="复合类型，常量和auto"><a href="#复合类型，常量和auto" class="headerlink" title="复合类型，常量和auto"></a>复合类型，常量和auto</h3><p>编译器推段出来的auto值有时候和初始值的类型并不完全 一致。</p>
+<p>编译器会适当的改变结果，时期更加符合初始化规则。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> i = <span class="number">0</span> , &amp;r = i ;</div><div class="line"><span class="keyword">auto</span> a = r;  a 是一个整数</div></pre></td></tr></table></figure>
+<p>我们知道 r 是一个引用，但是当引用被用作初始值时，真正参加初始化的实际是引用对象的值。因此编译器会将a 视作为 auto 类型。</p>
+<p>需要注意的是，auto 一般会忽略掉顶层的 const , 同时底层的const则会保留下来。比如当初始值是一个指向常量的指针的时候。 </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i ; &amp;cr = ci ;</div><div class="line"><span class="keyword">auto</span> b = ci ;  b 是一个整数，ci的<span class="keyword">const</span> 特性被忽略掉了。</div><div class="line"><span class="keyword">auto</span> c = cr;  c是一个整数， cr 是ci的别名，ci本身 是一个顶层的 <span class="keyword">const</span></div><div class="line"><span class="keyword">auto</span> d = &amp;i ; d 是一个整形的指针</div><div class="line"><span class="keyword">auto</span> e = &amp;ci; e 是一指向整形常量的指针，常量对象取地址是一种底层 <span class="keyword">const</span></div></pre></td></tr></table></figure>
+<p>我们需要推断出来的auto 类型是一个顶层的 const ,需要指明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> f = ci ; ci 的推演类型是 <span class="keyword">int</span> ,f是<span class="keyword">const</span> <span class="keyword">int</span></div></pre></td></tr></table></figure>
+<p>还可以将引用的类型设置为 auto </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">auto</span> &amp;g = ci;  a 是一个整形常量引用 绑定到 ci</div><div class="line"><span class="keyword">auto</span> &amp;h = <span class="number">42</span>; 错误，不能够为非常量引用绑定字面值</div><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> &amp;j = <span class="number">42</span>; 可以为常量引用绑定字面值</div></pre></td></tr></table></figure>
+<p>要在一条语句中定义多个变量，切记，符号 &amp;和*只从属于声明符，而不是基本数据类型的一部分。 </p>
+<h3 id="decltype-类型指示符"><a href="#decltype-类型指示符" class="headerlink" title="decltype 类型指示符"></a>decltype 类型指示符</h3><p>有时候希望从表达式的推断出要定义的变量的类型，但是不想用 该表达式的值初始化变量，为了满足这种需求 ，C++11引入了第二种类型说明符：</p>
+<p><code>decltype</code>，它的作用是选择并且返回操作数的数据类型，在此过程中，编译器分析表达式得到它的类型却不会计算实际的值。 </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">decltype</span> (f()) sum = x; <span class="comment">//sum 的类型就是 f的返回类型</span></div></pre></td></tr></table></figure>
+<p>decltype 不会实际调用 f() 但是，但是当调用发生的时候，f的返回值类型作为 sum的类型，换句话手，编译器被sum指定的类型是什么呢，如果f被调用的话会返回的那个类型。</p>
+<p>decltype 处理顶层const和引用的方式和 auto 有所不同，如果 decltype 使用的表达式是一个变量，则decltype返回该变量的类型包括 const 和引用在内</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = <span class="number">0</span> , &amp;rj = ci;</div><div class="line"><span class="keyword">decltype</span>(ci) x= <span class="number">0</span> ; x 是<span class="keyword">const</span> <span class="keyword">int</span> </div><div class="line"><span class="keyword">decltype</span>(rj) y = x; y的类型是<span class="keyword">const</span> <span class="keyword">int</span>&amp; ,y绑定到变量x;</div><div class="line"><span class="keyword">decltype</span>(rj) z; 错误， z 是一个引用必须初始化</div></pre></td></tr></table></figure>
+<h3 id="decltype-和引用"><a href="#decltype-和引用" class="headerlink" title="decltype 和引用"></a>decltype 和引用</h3><p>有些表达式会向 decltype 返回一个引用类型，一般来说出现这种情况的时候，一位这该表达式的对象能够作为一条复制语句的左值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">decltype</span> 的结果可以是引用类型</div><div class="line"><span class="keyword">int</span> i = <span class="number">42.</span> *p = &amp;i , &amp;r = i;</div><div class="line"><span class="keyword">decltype</span>(r+<span class="number">0</span>) b;  加法结果是<span class="keyword">int</span> ,b 是一个为初始化的<span class="keyword">int</span> </div><div class="line"><span class="keyword">decltype</span>(*p) c；c 是<span class="keyword">int</span>&amp; 必须初始化</div></pre></td></tr></table></figure>
+<p>r 是一个引用，decltype(r) 的结果是一个引用类型，如果得到结果是r所指向的类型，可以将r作为表达式的一部分，r+0 ,显然这个表达式的结果将是一个具体的数值 int ,而不是一个引用。</p>
+<p>如果表达式的内容是解引用操作，则decltype将得到引用类型。我们知道解指针也可以得到指针所指向的对象，而且可以对这个对象复制，因此，decltype(*p)的结果就是 一个int&amp; ,而不是 int.</p>
+<blockquote>
+<p>decltpye 和 auto的最为重要的区别在于：decltype的结果类型和表达式密切相关，对于decltype所用的表达式来说，如果变量名加上了一队括号，那么得到的类型和不加括号的时候会不同，因为后者编译器会把它当做一个表达式。变量是一种可以作为赋值语句左值的特殊表达式，所以这样的decltype就会得到引用类型</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">decltype</span> 的表达式如果加上了括号的变量，结果将会是引用。</div><div class="line"><span class="keyword">decltype</span> ((i))d ; 错误，d是 <span class="keyword">int</span> &amp; 必须初始化</div><div class="line"><span class="keyword">decltype</span> (i) e; e 是一个<span class="keyword">int</span> （为初始化的）<span class="keyword">int</span></div></pre></td></tr></table></figure>
+<h2 id="自定义数据结构"><a href="#自定义数据结构" class="headerlink" title="自定义数据结构"></a>自定义数据结构</h2><p>C++语句用户以类的形式自定义数据类型，而库类型 string ,istream ostream 等都也是以类的形式定义的。 </p>
+<h3 id="定义类型"><a href="#定义类型" class="headerlink" title="定义类型"></a>定义类型</h3><p>一个实例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span> &#123;</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> bookNo;</div><div class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> revenue = <span class="number">0.0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>类以关键词 struct 开始，紧紧跟着 类名和雷替，类体有花括号包围形成了一个新的作用域，类内部的名字必须唯一，但是可以和外部的名字重复。</p>
+<blockquote>
+<p>类体右侧的表示结束的花括号后必须加分号 ; 这是因为类体后面可以紧跟变量名以表示对该类型对象的定义，所以分号必不可少。</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span> &#123;</span>&#125; accum , trans , * sales_ptr ;</div><div class="line">可以写成另外一种方式： </div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span> &#123;</span>&#125; ; </div><div class="line">Sales_data accum, tarns ,sales_ptr;</div></pre></td></tr></table></figure>
+<p>分号表示声明符（通常为空）的结束，一般来收，不要把对象的定义和类的定义放在一起。 这么做无疑是把不同实体的定义放在了一起。 在一条语句中，一会儿指定类，一会儿指定变量，是一种非常不好的习惯。</p>
+<h3 id="类数据成员："><a href="#类数据成员：" class="headerlink" title="类数据成员："></a>类数据成员：</h3><p>类体定义类的数据成员，我们的类只有数据成员（data member）类的数据成员定义了对象的具体内容。 每个对象有自己的一份数据成员的copy,修改一个对象的数据成员，不会影响其他的 Sales_data 的对象。</p>
+<p>定义数据成员的方式和定义普通变量一样。 </p>
+<p>C++11规定，我们可以为数据成员提供一个类内的初始值。创建对象时，类内初始值将用于初始化数据成员。没有初始值的成员将会被默认的初始化。</p>
+<p>当然 C++中还有另外一种关键词 class 来定义自己的数据结构。</p>
+<h3 id="编写自己的头文件"><a href="#编写自己的头文件" class="headerlink" title="编写自己的头文件"></a>编写自己的头文件</h3><p>为了确保各个文件中的类的定义保持一致，类通常被定义在头文件中，而且类所在的头文件的名字应该与类的名字一样。例如，库类型 string 在名为 string 的头文件中定义，Sales_data类定义在 Sales_data.h的头文件中。</p>
+<p>头文件通常包含哪些只能够被定义一次的实体，如类class ,const ,constexptr 变量。 头文件也会经常 用到其他头文件的功能。例如 ，Sales_data 的成员对象中，包含了 string类，它在string.h头文件中，因此Sales_data.h就必须包含string.h 头文件，同时，使用 Sales_data的程序为了能够操作 string 成员也需要在导入 Sales_data.h 之外，再次导入 string.h</p>
+<blockquote>
+<p>头文件一旦改变，相关的源文件必须重新编译来获取更新过的声明。</p>
+</blockquote>
+<h2 id="预处理器"><a href="#预处理器" class="headerlink" title="预处理器"></a>预处理器</h2><p>确保头文件多次包含仍然能够正确工作的是预处理器 （preprocessor）</p>
+<p>C++程序还会用到的一项预处理功能就是头文件保护符（header guard）</p>
+<p>预处理变量有两类，已定义和未定义。 #define 指令吧一个名字设定为 预处理变量，另外两个指令则分别检查某个指定的预处理变量是否已经定义。</p>
+<p><code>#ifdef</code> 当且仅当变量已经定义时为真，<code>#ifndef</code>当且仅当变量未定义是为真。</p>
+<p>一旦检查结果为真，将执行后续操作直到遇到 <code>#endif</code>为止。如果为假，则跳过到<code>#endif</code>之间的这段代码。使用这种功能可以有效的方式重复包含的发生。</p>
+<blockquote>
+<p>事实上，C++标准库中经常使用这种方式来保证和c的兼容</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SALES_DATA_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SALES_DATA_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sales_data</span>&#123;</span></div><div class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> boolNo;</div><div class="line">    <span class="keyword">unsigned</span> units_sold = <span class="number">0</span>;</div><div class="line">    <span class="keyword">double</span> revenue = <span class="number">0.0</span>;</div><div class="line">&#125;;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure>
+<h1 id="类型是C-的基础"><a href="#类型是C-的基础" class="headerlink" title="类型是C++的基础"></a>类型是C++的基础</h1><hr>
+<p>注： 以上所有内容为个人学习 C++ primer 所作的笔记。仅仅用于学习交流之用，不可以用于任何商业用途。如果想要获取更多的内容，请购买正版书籍。 </p>
+<p>同时，主页的RESOURCE内提供了一个PDF版本可以参考使用。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> -Cpp </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> -Cpp </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C++学习笔记（二）常量]]></title>
-      <url>/2017/11/04/CppNotes-2/</url>
+      <url>/2017/11/04/CppNotes_2/</url>
       <content type="html"><![CDATA[<p>关于变量和类型的更加深入的探讨。主要是关于 const 限定符。</p>
 <a id="more"></a>
 <h2 id="复合类型的声明"><a href="#复合类型的声明" class="headerlink" title="复合类型的声明"></a>复合类型的声明</h2><p>变量的定义包括一个基本数据类型（base type）和一组声明符。</p>
@@ -91,7 +198,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[C++基础笔记（一） 变量和类型]]></title>
+      <title><![CDATA[C++学习笔记（一） 变量和类型]]></title>
       <url>/2017/11/04/CppNotes_1/</url>
       <content type="html"><![CDATA[<p>本人学习C++所做的笔记。本节主要是关于C++的变量和基本类型</p>
 <a id="more"></a>
@@ -291,6 +398,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> obj = <span class="number">3.14</span>, *pd = &amp;obj;</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; 正确，<span class="keyword">void</span> * 能够存放任意类型的对象</div><div class="line"><span class="keyword">void</span> * pv = &amp;obj ; obj可以是任意类型你的对象。</div><div class="line">pv = pd; pv 可以存放任意类型的指针</div></pre></td></tr></table></figure>
 <p>利用void<em> 指针所能够做的事情比较有限，那他和别的指针比较，作为函数的输入和输出，后者复制为另外一个void</em> 指针，不能够直接操作 void* 所指向的对象，因为无法确定这个对象是什么类型。 也就无从得知要怎么操作这个对象</p>
 <p>概括说来，void* 视角来看内存空间也就仅仅是内存空间，无法访问内存空间中的对象。当然我们也可以考虑对它进行转型，但是现在暂时不会讨论这个问题。</p>
+<hr>
 <p>注： 以上所有内容为个人学习 C++ primer 所作的笔记。仅仅用于学习交流之用，不可以用于任何商业用途。如果想要获取更多的内容，请购买正版书籍。 </p>
 <p>同时，主页的RESOURCES内提供了一个PDF版本可以参考使用。</p>
 ]]></content>
@@ -336,7 +444,21 @@
 <p>一个简单的实例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_9</span> </span>&#123;</div><div class="line">	<span class="keyword">static</span> JFrame  frm = <span class="keyword">new</span> JFrame(<span class="string">"边界式布局管理器 BorderLayout"</span>);</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		BorderLayout border = <span class="keyword">new</span> BorderLayout(<span class="number">5</span>,<span class="number">10</span>);</div><div class="line">		frm.setLayout(border);</div><div class="line">		frm.setSize(<span class="number">330</span>,<span class="number">200</span>);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"上北"</span>), BorderLayout.NORTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"下南"</span>), BorderLayout.SOUTH);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"左西"</span>), BorderLayout.WEST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"右东"</span>), BorderLayout.EAST);</div><div class="line">		frm.add(<span class="keyword">new</span> JButton(<span class="string">"中央"</span>), BorderLayout.CENTER);</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>运行结果：</p>
-<h2 id="网格布局管理器-GridLayout"><a href="#网格布局管理器-GridLayout" class="headerlink" title="网格布局管理器 GridLayout"></a>网格布局管理器 GridLayout</h2><p>网格式布局管理器 GridLayout 提供的页面布局规则是将容器的空间划分为若干行与类的网格形式，每个网格称为是单元格，在容器上添加组件是时，它们会按从左到右，从上到下的顺序在网格中排列行数和</p>
+<h2 id="网格布局管理器-GridLayout"><a href="#网格布局管理器-GridLayout" class="headerlink" title="网格布局管理器 GridLayout"></a>网格布局管理器 GridLayout</h2><p>网格式布局管理器 GridLayout 提供的页面布局规则是将容器的空间划分为若干行与类的网格形式，每个网格称为是单元格，在容器上添加组件是时，他们会按照从左到右，从上到下的顺序在网格中排列。 </p>
+<p>网格的行数和列数可以在构造方法里面指定。</p>
+<p>利用 GridLayout 布局策略时，容器中每个组件占用一个单元格，所以各组件的宽度相同，同样，所有组件的高度也是相同的。当容器的尺寸发生变化时，各组件的尺寸不会发生变化，但是各自的尺寸将会发生变化。</p>
+<p>###构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">GridLayout</span><span class="params">()</span> 创建 一个布局管理器，使用默认值，每行只有一个组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">GridLayout</span><span class="params">(<span class="keyword">int</span> rows ,<span class="keyword">int</span> cols)</span> 指定行数列数的网格布局管理器</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">GridLayout</span><span class="params">(<span class="keyword">int</span> rows ,<span class="keyword">int</span> cols ,<span class="keyword">int</span> hgap, <span class="keyword">int</span> vgap)</span>指定行数列数，水平间距和垂直间距</span></div></pre></td></tr></table></figure>
+<p>常用方法和上述管理器相同，不再赘述</p>
+<p>下面是一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.awt.*;</div><div class="line"><span class="keyword">import</span> javax.swing.*;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UI_10</span> <span class="keyword">extends</span> <span class="title">JFrame</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> JPanel pen = <span class="keyword">new</span> JPanel();</div><div class="line">	<span class="keyword">static</span> JTextField tf = <span class="keyword">new</span> JTextField(<span class="string">"0. "</span>);</div><div class="line">	<span class="keyword">static</span> JButton[] b = <span class="keyword">new</span> JButton[<span class="number">10</span>];</div><div class="line">	<span class="keyword">static</span> JButton bp ,ba, bs,bm, bd ,be ;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		UI_10 frm = <span class="keyword">new</span> UI_10();</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i&lt;= <span class="number">9</span> ;i++)</div><div class="line">			b[i] = <span class="keyword">new</span> JButton(<span class="string">""</span>+i);</div><div class="line">		bp = <span class="keyword">new</span> JButton(<span class="string">"."</span>); ba = <span class="keyword">new</span> JButton(<span class="string">"+"</span>);</div><div class="line">		bs = <span class="keyword">new</span> JButton(<span class="string">"-"</span>); bm = <span class="keyword">new</span> JButton(<span class="string">"*"</span>);</div><div class="line">		bd = <span class="keyword">new</span> JButton(<span class="string">"/"</span>); be = <span class="keyword">new</span> JButton(<span class="string">"="</span>);</div><div class="line">		frm.setLayout(<span class="keyword">null</span>);</div><div class="line">		frm.setSize(<span class="number">300</span>,<span class="number">220</span>);</div><div class="line">		frm.setResizable(<span class="keyword">false</span>);</div><div class="line">		GridLayout gl = <span class="keyword">new</span> GridLayout(<span class="number">4</span>, <span class="number">4</span>);</div><div class="line">		pen.setLayout(gl);</div><div class="line">		tf.setBounds(<span class="number">35</span>,<span class="number">15</span>,<span class="number">200</span>,<span class="number">25</span>);</div><div class="line">		pen.setBounds(<span class="number">35</span>, <span class="number">50</span>, <span class="number">200</span>, <span class="number">120</span>);</div><div class="line">		tf.setBackground(Color.CYAN);</div><div class="line">		tf.setHorizontalAlignment(JTextField.RIGHT);</div><div class="line">		pen.add(b[<span class="number">7</span>]); pen.add(b[<span class="number">8</span>]); pen.add(b[<span class="number">9</span>]); pen.add(bd);</div><div class="line">		pen.add(b[<span class="number">4</span>]); pen.add(b[<span class="number">5</span>]); pen.add(b[<span class="number">6</span>]); pen.add(bm);</div><div class="line">		pen.add(b[<span class="number">1</span>]); pen.add(b[<span class="number">2</span>]); pen.add(b[<span class="number">3</span>]); pen.add(bs);</div><div class="line">		pen.add(b[<span class="number">0</span>]); pen.add(bp); pen.add(be); pen.add(ba);</div><div class="line">		frm.add(tf);</div><div class="line">		frm.add(pen);</div><div class="line">		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</div><div class="line">		frm.setVisible(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="卡片式布局管理器-CardLayout"><a href="#卡片式布局管理器-CardLayout" class="headerlink" title="卡片式布局管理器 CardLayout"></a>卡片式布局管理器 CardLayout</h3><p>卡片式的布局管理器大的布局方式将容器中所有的组件如同堆叠起来的一副扑克牌，每次只能够显示其中的一张。一样</p>
+<p>这个被显示的组件将会占据容器的全部空间，利用add()方法往容器中加入组件时每个组件对应一个名字，然后依据这个名字利用CardLayout类提供的方法来控制其他组件是否显示，所有基于CardLayout布局方式是在显示区域内每次只有一个组件是可见的。</p>
+<h3 id="构造方法-1"><a href="#构造方法-1" class="headerlink" title="构造方法"></a>构造方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">CardLayout</span><span class="params">()</span> 创建布局管理器，容器中的对象没有间距</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">CardLayout</span><span class="params">( <span class="keyword">int</span> hgap ,<span class="keyword">int</span> vgap)</span> 指定组件与容器边缘的水平间距和垂直间距</span></div></pre></td></tr></table></figure>
+<p>###常用的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">first</span><span class="params">(Contianer parent)</span> 显示 parent中的第一个组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">next</span><span class="params">(Container parent)</span> 显示parent中的第二个组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">privious</span><span class="params">( Container parent)</span> 显示parent的前一个组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">last</span><span class="params">(Container parent)</span> 显示最后一个组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">(Container parent , String name)</span> 显示指定名称的组件</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHgap</span><span class="params">(<span class="keyword">int</span> hgap)</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVgap</span><span class="params">(<span class="keyword">int</span> vgap)</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeLayoutComponent</span><span class="params">(Component comp)</span></span></div></pre></td></tr></table></figure>
+<p>一个简单的实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
 ]]></content>
       
         <categories>
