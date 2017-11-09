@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[Java_jdbc_simple]]></title>
+      <title><![CDATA[JDBC 访问数据库]]></title>
       <url>/2017/11/09/Java-jdbc-simple/</url>
       <content type="html"><![CDATA[<p>JDBC 是 Java 为了访问数据库而设计的 API. 是Java 应用程序开发中的一项核心技术。</p>
 <p>JDBC 的含义是 Java Database Connectivity , JDBC 不是这些英文单词的首字母组合，而是商标名。但是常常会被认为是 Java 数据库连接。 JDBC 是Java 中访问数据库的标准 API. 通过 JDBC API 用 Java 语言写出的程序可以执行 SQL 语句，获取结果，显示数据等。</p>
