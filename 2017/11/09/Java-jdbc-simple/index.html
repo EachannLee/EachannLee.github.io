@@ -1,0 +1,696 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Java_jdbc_simple | Li Jian&#39;s BOLG</title>
+    <meta name="author" content="Li Jian">
+    
+    <meta name="description" content="JDBC 是 Java 为了访问数据库而设计的 API. 是Java 应用程序开发中的一项核心技术。
+JDBC 的含义是 Java Database Connectivity , JDBC 不是这些英文单词的首字母组合，而是商标名。但是常常会被认为是 Java 数据库连接。 JDBC 是Java 中访问数据库的标准 API. 通过 JDBC API 用 Java 语言写出的程序可以执行 SQL 语句，获取结果，显示数据等。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Java_jdbc_simple"/>
+    <meta property="og:site_name" content="Li Jian&#39;s BLOG"/>
+
+    
+    <meta property="og:image" content=""/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Li Jian&#39;s BLOG" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="red darken-4">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Li Jian&#39;s BLOG</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav pink darken-4" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://oykemr77k.bkt.clouddn.com/image/elemtype/jpg/avatar.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Li Jian</p>
+                        <p class="desc">大邪僧/日漫宅/</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav pink darken-4" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Java/">
+                    Java <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Cpp/">
+                    Cpp <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/DateBase/">
+                    DateBase <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux/">
+                    Linux <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Other/">
+                    Other <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper red darken-4">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Java/">-Java</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Java_jdbc_simple</h1>
+    
+
+
+            </div>
+            <time class="red-link-context" datetime="2017-11-09T09:39:24.000Z"><a href="/2017/11/09/Java-jdbc-simple/">2017-11-09</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Jdbc/" class="chip brown">-Jdbc</a>
+        
+    </div>
+
+
+            <div class="toc red-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#使用JDBC开发数据库应程序"><span class="section table-of-contents-text">使用JDBC开发数据库应程序</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#建立与数据库的连接"><span class="section table-of-contents-text">建立与数据库的连接</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#执行SQL语句"><span class="section table-of-contents-text">执行SQL语句</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#处理返回结果"><span class="section table-of-contents-text">处理返回结果</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#关闭创建的各种对象"><span class="section table-of-contents-text">关闭创建的各种对象</span></a></li></ol>
+</div>
+
+
+            <div class="entry red-link-context">
+                <p>JDBC 是 Java 为了访问数据库而设计的 API. 是Java 应用程序开发中的一项核心技术。</p>
+<p>JDBC 的含义是 Java Database Connectivity , JDBC 不是这些英文单词的首字母组合，而是商标名。但是常常会被认为是 Java 数据库连接。 JDBC 是Java 中访问数据库的标准 API. 通过 JDBC API 用 Java 语言写出的程序可以执行 SQL 语句，获取结果，显示数据等。</p>
+<a id="more"></a>
+<p>一般来说，JDBC会做三件事：</p>
+<ol>
+<li>和数据库建立联系。</li>
+<li>发送SQL语句。</li>
+<li>处理SQL语句执行的结果。 </li>
+</ol>
+<h3 id="使用JDBC开发数据库应程序"><a href="#使用JDBC开发数据库应程序" class="headerlink" title="使用JDBC开发数据库应程序"></a>使用JDBC开发数据库应程序</h3><p>JDBC API 主要位于 Java 的 <code>java.sql</code>包和<code>javax.sql</code>包中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DriverManager 负责加载不同的驱动程序（Driver），并且更具不同的请求，向调用这返回相应的数据库连接（Connection）</div><div class="line">Connection(i) 数据库连接，负责与数据库间通讯 SQL 语句的执行以及事务处理都是在某个特定的Connection环境中进行的。可以用于产生用于 SQL 的 Statement 对象。</div><div class="line">Statement(i) 用以执行不含参数的静态 SQL 查询和更新，并且返回执行结果。</div><div class="line">PreparedStatement(i) 用以执行包含参数的静态 SQL 查询和更新，在服务器端编译，允许重复执行以提高效率。</div><div class="line">CallableStatement(i) 用以调用数据库中的存储过程</div><div class="line">ResultSet 用于获取SQL查询结果</div><div class="line">SQLException 代表在数据库连接的建立，关闭，或者SQL语句的执行过程中发生了异常。</div></pre></td></tr></table></figure>
+<p>JDBC 驱动程序开发商已经提供了这些接口的实现类。所以在使用的过程中，实际上是在调用这些接口实现类中的方法。</p>
+<p>使用JDBC访问数据库的基本步骤为：</p>
+<ol>
+<li>加载驱动程序，</li>
+<li>建立和数据库的连接，</li>
+<li>创建执行方式语句</li>
+<li>执行SQL语句。</li>
+<li>返回处理结果，</li>
+<li>关闭创建的各个对象。</li>
+</ol>
+<h4 id="建立与数据库的连接"><a href="#建立与数据库的连接" class="headerlink" title="建立与数据库的连接"></a>建立与数据库的连接</h4><ol>
+<li><p>加载 JDBC驱动程序： </p>
+<p>一种非常简答的方式是使用 <code>Class.forName()</code>显示的加载：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.Class.forName(JDBCDriverCLass);</div></pre></td></tr></table></figure>
+<p>JDBCDriverClass 是要加载的JDBC驱动程序的名称。它是以字符串形式表达的类长名，该方法可能抛出 ClassNotFoundException 异常。</p>
+<p>下面是四种常见的字符串驱动程序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Access:  sun.jdbc.odbc.JdbcOdbcDriver</div><div class="line">SQL Server : com.microsoft.sqlserver.jdbc.SQLServerDriver</div><div class="line">MySQL : com.mysql.jdbc.Driver</div><div class="line">Oracle : oracle.jdbc.driver.OracleDriver</div></pre></td></tr></table></figure>
+<ol>
+<li>创建数据库连接：</li>
+</ol>
+<p>JDBC驱动程序与数据库的连接是以对象的程序表示的，</p>
+<p>所以创建数据库连接也称为是创建数据库连接对象。</p>
+<p>要想将一个JDBC对象连接到一个数据库，需要使用 <code>DriverManager</code>类中的静态方法来创建。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(String url,String user , String password)</span>  建立JDBC驱动程序到指定的数据库URL的连接，其中的URL了一种标识数据库的方法，user为用户名，password为密码。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Driver <span class="title">getDriver</span><span class="params">(String url)</span></span>; 返回数据库指定的数据库连接的驱动程序。</div></pre></td></tr></table></figure>
+<p><code>DirverManager</code>类的<code>getConnection()</code>实现建立JDBC驱动程序到数据库连接的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Connection conn = DriverManager.getConnection(String url, String user,String password);</div><div class="line">url 是一种标识数据库位置的方式，JDBC URL 由三个部分标识：</div><div class="line">jdbc:&lt;subprotocol&gt;:&lt;subname&gt; </div><div class="line">protocol : 协定书</div></pre></td></tr></table></figure>
+<p><code>subprotocol</code>是子协议，指的是数据库的连接方式。</p>
+<p><code>subname</code>是子名称是一个标识数据库的方法。</p>
+<p>常用的url:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Access : jdbc:odbc:dataSource</div><div class="line">SQL Server: jdbc:sqlserver:<span class="comment">//hostname:port#;DatabaseName = dbname</span></div><div class="line">MySQL : jdbc:mysdql:<span class="comment">//hostname/dbname   （默认端口号是 1433）</span></div><div class="line">Oracle : jdbc:oracle:thin:@hostname:port#:oracleDBSID （默认端口号是 1521）</div></pre></td></tr></table></figure>
+<p>假设： 一个名为 Student 的数据库它们各自的url 是：</p>
+<p>SQL Server:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Connetion conn = DriverManager.getConnection(<span class="string">"jdbc:sqlserver://localhost:1433;DatabaseName = Student"</span>,<span class="string">"sa"</span>,<span class="string">"123456"</span>);</div></pre></td></tr></table></figure>
+<p>MySQL:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Connection conn = DirverManager.getConnection(<span class="string">"jdbc:mysql://localhost/Student"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</div></pre></td></tr></table></figure>
+<p>Oracle :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Connection conn = DirverManager.getConnection(<span class="string">"jdbc:oracle:thin:@localhost:1521:Student"</span>,<span class="string">"root"</span>,<span class="string">"123456"</span>);</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ol>
+<p><code>Connection</code>接口的常用方法以及使用说明。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Statement <span class="title">createStatement</span><span class="params">()</span> 创建一个 Statement 对象用来将SQL语句发送到数据库。</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Statement <span class="title">createStatement</span><span class="params">(<span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency)</span></span></div></pre></td></tr></table></figure>
+<p>功能同上，参数：<code>resultSetType</code>指定的是结果集的类型，有三个取值：</p>
+<ol>
+<li>TYPE_FORWORD_ONLY 表示只可以向前移动记录指针。</li>
+<li>TYPE_SCROLL_INSENSITIVE 可以双向移动记录指针但是不会及时的更新。也就是如果数据库中的数据被修改掉，并不会在ResultSet中表现出来。</li>
+<li>TYPE_SCROLL_SENSITIVE 可以双向的移动指针，并且会及时的追踪数据库的更新，以便于更改数据库中的数据。</li>
+</ol>
+<p>参数：<code>resultSetConcurrency</code> 指定结果集的并发方式，有两个取值，</p>
+<ol>
+<li>CONCUR_READ_ONLY 表示不能用结果集更新数据苦衷的表。</li>
+<li>CONCUR_UPDATATABLE 表示可以用结果集更新数据库中的表。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">prepareStatement</span><span class="params">(String sql)</span></span></div></pre></td></tr></table></figure>
+<p>创建一个 <code>PreparedStatement</code> 对象来将具有参数的动态SQL语句发送到数据库。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> CallableStatement <span class="title">prepareCall</span><span class="params">(String sql)</span></span></div></pre></td></tr></table></figure>
+<p>创建的一个 <code>CallableStatement</code> 对象来调用数据库的存储过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> 断开连接，释放此 Connection 对象的数据库和JDBC资源</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isClosed</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
+<p>用于判断 Connection 对象是否已经关闭。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAutoCommit</span><span class="params">(<span class="keyword">boolean</span> autoCommit)</span></span></div></pre></td></tr></table></figure>
+<p>是否关闭自动提交模式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">commit</span><span class="params">()</span>    提交 SQL 语句，使上一次提交/回滚以来进行的所有更改操作生效。</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rollback</span><span class="params">()</span>  取消SQL语句的执行，撤销在当前的事务中进行的所有更改。</span></div></pre></td></tr></table></figure>
+<h3 id="执行SQL语句"><a href="#执行SQL语句" class="headerlink" title="执行SQL语句"></a>执行SQL语句</h3><p>创建了 Statement 对象之后，可以通过该对象发送 SQL 语句，如果 SQL 语句执行之后产生了 结果集 <code>ResultSet</code>，Statement 对象将会将集封装成 <code>ResultSet</code>对象并且返回 </p>
+<p>Statement 接口的常用方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ResultSet <span class="title">executeQuery</span><span class="params">(String sql)</span> 执行给定的 SQL,并且将结果封装在 ResultSet 中返回</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">executeUpdate</span><span class="params">(String sql)</span> 执行给定的SQL语句，该语句可以是INSERT, UNDATE,DELETE ,总之是不会返回结果集的语句。语句返回的是一个整数，表示受影响的行数。</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">execute</span><span class="params">(String sql)</span> 执行给定的SQL语句，如果返回结果集，<span class="keyword">true</span>,调用 <span class="title">getResult</span><span class="params">()</span> 方法获取执行SQL语句的返回结果。如果没有返回结果,那么返回 <span class="keyword">false</span> 调用 <span class="title">getUpdateCount</span><span class="params">()</span> 返回更新条数</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ResultSet <span class="title">getResult</span><span class="params">()</span> 以ResultSet 的方式返回当前的结果。如果没有结果 返回 <span class="keyword">null</span> ，每个结果只是调用一次该方法。</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getUpdateCount</span><span class="params">()</span>  返回更新次数，如果没有结果，返回 -1</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> 关闭 Statement 对象，释放JDBC资源。</span></div></pre></td></tr></table></figure>
+<h3 id="处理返回结果"><a href="#处理返回结果" class="headerlink" title="处理返回结果"></a>处理返回结果</h3><p>结果集 <code>ResultSet</code>是一个 包含 SQL 的 SELECT 语句中包含的符合条件的所有行。这些行的全体称之为结果集。</p>
+<p>返回的结果集是一个表，而这个表就是 <code>ResultSet</code> 的对象。</p>
+<p>在这些结果集中通过记录指针（也称之为游标）控制具体记录的访问。记录指针指向的结果是当前的记录。 </p>
+<p>在结果集中可以使用 <code>getXXX()</code>方法，从当前行获取值。</p>
+<p><code>ResultSet</code>接口的常用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">absolute</span><span class="params">(<span class="keyword">int</span> row)</span> 将记录指针移动到结果集的第 row 条记录。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">relative</span><span class="params">(<span class="keyword">int</span> row)</span> 按照相对行数移动指针</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">beforFirst</span><span class="params">()</span> 将记录指针移动到结果集的头（第一条记录之前）</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">first</span><span class="params">()</span> 将记录指针移动到第一条记录</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">previous</span><span class="params">()</span> 将记录指针移动到结果集的当前位置的上一条记录。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">next</span><span class="params">()</span> 将记录指针移动到结果集的当前位置的下一条记录。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">last</span><span class="params">()</span> 将记录指针移动到结果集的最后一条记录。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">afterLast</span><span class="params">()</span> 将记录指针移动到当前结果集的最后一条记录之后。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAfterLast</span><span class="params">()</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isLast</span><span class="params">()</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBeforFirst</span><span class="params">()</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isFirst</span><span class="params">()</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getRow</span><span class="params">()</span> 返回当前记录的行数</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getString</span><span class="params">(String columnLabel)</span> 返回当前记录字段为 columnLabel的值</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getString</span><span class="params">(<span class="keyword">int</span> columnIndex)</span> 返回当前行第 columnIndex列的值，类型为 String</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getInt</span><span class="params">(<span class="keyword">int</span> columnIndex)</span> 返回当前行第 columnIndex的值，类型为 <span class="keyword">int</span></span></div><div class="line"><span class="function"><span class="keyword">public</span> Statement <span class="title">getStatement</span><span class="params">()</span> 返回结果集的 Statement 对象。</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">close</span><span class="params">()</span> 释放此 ResultSet 对象的数据库和JDBC资源。</span></div><div class="line"><span class="function"><span class="keyword">public</span> ResultSetMetaData <span class="title">getMetaData</span><span class="params">()</span> 返回结果集的列的编号，类型和属性。</span></div></pre></td></tr></table></figure>
+<p>记录指针的最初始位置位于第一条记录之前，即结果集的头，第一次调用 next() 方法，是记录指针移动到第一条记录。</p>
+<p>当记录指针移动到结果集的尾时其返回 false ,在使用 ResultSet 对象的 getXXX()  一定要让ResultSet对象的 getXXX() 方法对结果集中的数据进行访问。一定要使数据库中的字段的数据类型和Java中的数据类型相匹配。</p>
+<p>一个典型的可以显示SQL语句查询的所有结果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span>( rs.next() )&#123;</div><div class="line">    String no = rs.getString(<span class="string">"sNo"</span>);</div><div class="line">    String name = rs.getString(<span class="string">"sName"</span>);</div><div class="line">    String sex = rs.gtString(<span class="string">"sex"</span>);</div><div class="line">    String rs.getInt(<span class="string">"age"</span>);</div><div class="line">    System.out.println(no+<span class="string">" "</span>+name+<span class="string">" "</span>+sex+<span class="string">" "</span>+age);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>读取特定字段的内容： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String no = rs.getString(<span class="string">"sNo"</span>);</div><div class="line">String no = rs.getString(<span class="number">1</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>特别注意的是，在 <code>ResultSet</code> 中，字段是从左到右编号的，并且以 1 开始。</p>
+</blockquote>
+<h3 id="关闭创建的各种对象"><a href="#关闭创建的各种对象" class="headerlink" title="关闭创建的各种对象"></a>关闭创建的各种对象</h3><p>当对数据库的操作执行完毕后者退出应用程序之前，需要将数据库中建立的各个对象按照顺序关闭，防止系统资源浪费。</p>
+<p>关闭的次序是，先关闭结果集对象，其次 关闭 Statement 对象。最后关闭连接对象。</p>
+<blockquote>
+<p>在任意一个时间内，一个给定的 Statement 对象只能够打开一个结果集。</p>
+<p>当重新使用同一个 Statement 对象时，将会关闭先前生成的任何结果集。这意味着，如果想对先前的结果集进行处理，其他的查询对象就必须使用其他的 Statement ,否咋，第二个查询语句会将使尚在查询过程中的结果集丢失。</p>
+<p>也就是说， 执行 SQL 语句会关闭所调用对象当前打开的结果集。</p>
+<p>所以在重新执行对象 Statement 之前，需要完成对当前 Statement 对象的设置。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">    <span class="keyword">if</span>(rs!=<span class="keyword">null</span>) rs.close();</div><div class="line">    <span class="keyword">if</span>(rs!=<span class="keyword">null</span>) stat.close();</div><div class="line">    <span class="keyword">if</span>(conn!=<span class="keyword">null</span>)conn.close();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+                
+
+
+<p class="red-link-context">
+    <a href="/2017/11/06/JavaSwing-1/" rel="next" title="JavaSwing_1">
+    下一篇：JavaSwing_1
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large red darken-4">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect pink darken-4" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse prange lighten-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer red darken-4 darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/eachannlee" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright red-link-context">
+        <div class="container">
+            © 2017 elemtype.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            $(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+            }
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('brown lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge red darken-4"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword red lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>

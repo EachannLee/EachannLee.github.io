@@ -7,15 +7,15 @@
 
     
 
-    <title>Java 源文件的编译命令（javac 命令） | Li Jian&#39;s BOLG</title>
+    <title>JavaSwing_1 | Li Jian&#39;s BOLG</title>
     <meta name="author" content="Li Jian">
     
-    <meta name="description" content="一个编写好的Java源文件.java，要成功运行需要经历 编译 、加载、解释 、执行 四个步骤。Java编译程序将源文件编译成JVM可以执行的二进制字节码 .class。程序运行时，JVM将相应的字节码加载到内存中，Java 解释器将字节码翻译为机器代码执行。">
+    <meta name="description" content="">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Java 源文件的编译命令（javac 命令）"/>
+    <meta property="og:title" content="JavaSwing_1"/>
     <meta property="og:site_name" content="Li Jian&#39;s BLOG"/>
 
     
@@ -222,10 +222,6 @@
         <span class="breadcrumb">当前位置（分类目录）</span>
         
             
-    
-    
-    <a class="breadcrumb" href="/categories/Java/">Java</a>
-
 
         
 
@@ -241,12 +237,12 @@
             <div class="article-title">
                 
     
-        <h1>Java 源文件的编译命令（javac 命令）</h1>
+        <h1>JavaSwing_1</h1>
     
 
 
             </div>
-            <time class="red-link-context" datetime="2017-10-12T05:02:48.000Z"><a href="/2017/10/12/Java-javac-grammar/">2017-10-12</a></time>
+            <time class="red-link-context" datetime="2017-11-06T11:28:02.000Z"><a href="/2017/11/06/JavaSwing-1/">2017-11-06</a></time>
 
             <span id="busuanzi_container_page_pv" class="read-times-container">
     <i class="fa fa-eye"></i>
@@ -254,110 +250,26 @@
 </span>
 
             
-    <div class="tags-row">
-        
-            <a href="/tags/Javac/" class="chip brown">-Javac</a>
-        
-    </div>
-
 
             <div class="toc red-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#编译"><span class="section table-of-contents-text">编译</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#关于javac-exe"><span class="section table-of-contents-text">关于javac.exe</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Javac-命令的使用"><span class="section table-of-contents-text">Javac 命令的使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#详细命令"><span class="section table-of-contents-text">详细命令</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#d-目录"><span class="section table-of-contents-text">-d 目录</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#classpath-cp"><span class="section table-of-contents-text">-classpath    -cp</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#sourcepath"><span class="section table-of-contents-text">-sourcepath</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#source-和-target"><span class="section table-of-contents-text">source 和 target</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#文件目录的组织"><span class="section table-of-contents-text">文件目录的组织</span></a></li></ol>
+    
 </div>
 
 
             <div class="entry red-link-context">
-                <p>一个编写好的Java源文件<code>.java</code>，要成功运行需要经历 <strong>编译</strong> 、<strong>加载</strong>、<strong>解释</strong> 、<strong>执行</strong> 四个步骤。Java编译程序将源文件编译成JVM可以执行的二进制字节码 <code>.class</code>。程序运行时，JVM将相应的字节码加载到内存中，Java 解释器将字节码翻译为机器代码执行。</p>
-<a id="more"></a>
-<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>Java程序运行的第一步是将Java源文件编译成字节码，即<code>.class</code>文件，C/C++编译器在编译源代码的时候，会根据所在平台的硬件信息，通过查表量所有对符号的引用转换为特定的内偏移量，从而保证了程序可以在平台上顺利运行。Java语言设计的初衷就是实现平台无关性（事实上并没有完全实现），做到这一点的一个重要的保证就是保证Java中所有引用信息不能够依赖于特定的硬件平台，因此，Java的编译器在编译时，不会直接将变量和方法的引用编译为数值引用，也不会确定在执行过程中具体的内存布局，而是将引用信息保存在字节码中，待程序在JVM中解释运行时，创建相应的布局，并且通过查表确定变量和方法所在的地址。换句话说就是<strong>字节码保留了做什么的信息，实际JVM来决定具体怎么做。</strong>从而实现了Java的可移植性。</p>
-<h2 id="关于javac-exe"><a href="#关于javac-exe" class="headerlink" title="关于javac.exe"></a>关于javac.exe</h2><p>Java的编译程序javac.exe不是真正意义上的可执行程序，而是一个包装器，包含在jdk中，在jre环境下是没有的，它实际上是在运行下面的命令：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -classpath C:\Pragram Files\Java\JDK\lib\tools.jar com.sun.tools.javac.Main</div></pre></td></tr></table></figure>
-<h2 id="Javac-命令的使用"><a href="#Javac-命令的使用" class="headerlink" title="Javac 命令的使用"></a>Javac 命令的使用</h2><p>执行Java编译工作的程序是Java编译器<code>javac.exe</code>，它在Java JDK的<code>bin</code>目录下，Windows下通过cmd执行其路径编译特定的Java文件。要特别注意 使用 javac 编译时提供的源代码名称必须含有<code>.java</code> 后缀。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c:\Pragram Files\Java\JDK\bin\javac Hello.java</div></pre></td></tr></table></figure>
-<p>通过设置环境变量后，可以不用给出程序的具体的地址，直接调用<code>javac</code></p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac Hello.java</div></pre></td></tr></table></figure>
-<p>生成的字节码文件<code>.class</code>默认和源文件在同一个目录下，可以通过 <code>-d</code>命令指定字节存放的地址。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -d C:\javaProject\bin Hello.java</div></pre></td></tr></table></figure>
-<p>生成的 <code>Hello.class</code>文件存放在<code>c:\javaProject\bin</code>目录下bin目录必须实际存在，否则将会报错。</p>
-<p>javac 可以隐式的编译一些没有在命令行中提及的源文件（前提是它们都在同一个目录下）使用 <code>-verbos</code>选项跟踪自动编译。在编译源文件时，和源文件所有相关联的类，包括源文件中使用、扩展或者实现的每个类和接口，已及在源文件中没有明确出现，但是通过继承关系提供信息的类与接口的文件都要一并提供。</p>
-<p>例如： 如果一个类 Lee 继承自 类 Person ，使用javac 编译时必须一起提供：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -d c:\bin Lee.java Person.java</div></pre></td></tr></table></figure>
-<p>当然了，如果这两个文件在同一个目录下，编译Lee.java时就是隐式的自动加载 Person.java。如果不在同一个目录下，就需要指明详细的路径（不推荐，尽量将所有的源文件放在同一个项目文件下,如果关联对象过多，难以管理）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -d C:\bin Lee.java F:\src\Person.java</div></pre></td></tr></table></figure>
-<p>可以同时编译多个<code>.java</code>文件，书写时用空格隔开。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac Test1.java Test2.java Test3.java</div></pre></td></tr></table></figure>
-<p>为了缩短或者简化javac命令，可以指定一个或者多个每行含有一个文件名的文件。当javac遇到以<code>@</code>开头的参数时，它对那个文件中含有的文件名的操作和命令行的操作是一样的，有利于批量的编译大量文件。同时使得Windows命令行的长度不受限制。</p>
-<p>例如，可以在名为sourcefiles的文本文件中列出所有源文件的名称。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Hello1.java</div><div class="line">Hello2.java</div><div class="line">Hello3.java</div></pre></td></tr></table></figure>
-<p>然后在命令行下运行编译器：(主要要带有相应的文件后缀名否则就会因为找不到文件报错。)</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac @sourcefiles.txt</div></pre></td></tr></table></figure>
-<p>等价于：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac Hello1.java Hello2.java Hello3.java</div></pre></td></tr></table></figure>
-<h2 id="详细命令"><a href="#详细命令" class="headerlink" title="详细命令"></a>详细命令</h2><p>Javac 的详细命令可以在命令行中输入<code>Javac</code>来查看。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac</div></pre></td></tr></table></figure>
-<p>其标准的语法格式如下：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac [ options ] [sourcefiles][@files]</div></pre></td></tr></table></figure>
-<ul>
-<li>options: 命令行选项</li>
-<li>sourcefiles : 一个或者多个要编译的源文件。例如 ：Hello.java</li>
-<li>@files ：一个或者多个源文件的列表文件。如上文中的 <code>sourcefiles.txt</code></li>
-</ul>
-<h3 id="d-目录"><a href="#d-目录" class="headerlink" title="-d 目录"></a>-d 目录</h3><p>该选项用于生成class目标文件的目录，如果某个类是一个包的组成部分，则javac将会把该类放入反映包名的目录中，必要时创建目录，注意不要破坏class文件反映包名的目录结构，否则在运行时将会找不到文件。如果没有指定-d默认class文件被存放在和源文件相同的目录中。</p>
-<p>例如； 如果一个类在包 ：<code>com.elemtype</code>下。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.elemtype;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span></span>&#123;&#125;</div></pre></td></tr></table></figure>
-<p>命令行中输入：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -d C:\workspace\bin Hello.java</div></pre></td></tr></table></figure>
-<p>编译后生成的class文件的存放路径将会是：<code>C:\worksapce\bin\com\elemtype\Hello.class</code></p>
-<p>需要注意的是，-d 生成的目录并不会被自动的添加到用户类路径中。</p>
-<p>JDK编译一个java源文件的时候，搜索类文件的方式和顺序如下：</p>
-<ol>
-<li><p><strong>Bootstrap classes</strong></p>
-<p>Bootstrap默认的是JDK自带的jar或者zip文件，包括 jar\lib下的rt.jar等文件。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">c:\Pragram files\Java\JDK\jre\lib\rt.jar</div></pre></td></tr></table></figure>
-</li>
-<li><p><strong>Extension classes</strong></p>
-<p>默认指的是 <code>jre\lib\ext\</code>下的文件，JDK在搜素完Bootstrap classes后搜索这些文件。</p>
-</li>
-<li><p><strong>User classes</strong></p>
-<p>搜索顺序是当前的目录，环境变量CLASSPATH、-classpath.</p>
-</li>
-</ol>
-<h3 id="classpath-cp"><a href="#classpath-cp" class="headerlink" title="-classpath    -cp"></a>-classpath    -cp</h3><p>-classpath 可以用来设置 User classes -classpath 的路径将会覆盖 CLASSPATH的设置。告知JDK搜索目录名，jar文档，zip文档。使用<code>;</code>进行分割。</p>
-<p>例如：当你开发一个公共类并且包装成 一个 elemtype.jar 包，使用这个类的时候，使用 -classpath 告知 编译器 从 elemtype.jar中查找该类，否则将会报错。未找到该类。使用了 -classpath 后将不会再使用CLASSPATH中的类搜索路径，如果CLASSPATH未设置，默认使用 当前目录 <code>.</code>作为类搜索路径。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -classpath C:\lib\elemtype.jar -d classes src\*.java</div></pre></td></tr></table></figure>
-<p><code>*.java</code>表示当前目录下的所有java文件。</p>
-<p>使用 -classpath的缩写 <code>-cp</code>可以简化命令，上面的命令可以写成：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -cp c:\lib\elemtype.jar -d classes src\*.java</div></pre></td></tr></table></figure>
-<p>推荐使用 -classpath 替代CLASSPATH的搜索路径，防止多个项目同时使用CLASSPATH发生潜在的冲突。</p>
-<h3 id="sourcepath"><a href="#sourcepath" class="headerlink" title="-sourcepath"></a>-sourcepath</h3><p>编译时，源文件的路径可以用 <code>-sourcepath</code>来设定。具体使用方式和 -classpath 一样。默认情况下和-classpath的路径一样。编译过程中，需要源文件的话会首先在sourcefile 和 @sourcefile 指定的目录下寻找源文件，如果没有找到，会在 <code>-sourcepath</code>的路径下寻找。<code>-sourcepath</code>指定的文件可以是源文件的根目录，jar归档文件，或者是 zip归档文件。</p>
-<p>实例：</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -sourcepath src -d classes src\com\elemtype\Hello.java</div></pre></td></tr></table></figure>
-<p>或者使用缩写<code>-sp</code>:</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -sp src -d classes src\com\elemtype\Hello.java</div></pre></td></tr></table></figure>
-<h3 id="source-和-target"><a href="#source-和-target" class="headerlink" title="source 和 target"></a>source 和 target</h3><p>如果你的电脑上安装了多个JDK,所以包含了多个版本的编译器，和多个版本的JVM.<code>-source</code>命令可以指定使用哪个编译器来进行编译。<code>-target</code>将指定生成和指定JVM兼容的class文件。</p>
-<p>例如：想要用 JDK 1.6 版本的编辑器生成兼容 JVM 1.2 的class文件。</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javac -cp lib\Util.zip -sp src -source <span class="number">1.6</span> -target <span class="number">1.2</span> -d classes Hello.java</div></pre></td></tr></table></figure>
-<p>想要了解不同版本的特性，请查阅官方文档。</p>
-<h2 id="文件目录的组织"><a href="#文件目录的组织" class="headerlink" title="文件目录的组织"></a>文件目录的组织</h2><p>推荐在项目文件夹下建立  src 目录存放源代码，最好创建反映包名的目录结构（需要手动创建目录），建立 bin 目录存放类文件，编译时会为class文件生成（反应包名的目录结构）。</p>
-<p>例如 ：Practice项目中有源文件： com.elemtype.Hello.java com.elemtype.uitl.Test.java ,源代码文件目录： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">src </div><div class="line">com</div><div class="line">elemtype</div><div class="line">util  Hello.java</div><div class="line">Test.java</div></pre></td></tr></table></figure>
-<p>类文件类似。</p>
-<hr>
-<p>更多细节请查看官方文档。</p>
-<p>^_^</p>
-
+                <a id="more"></a>
                 
 <p class="red-link-context">
-    <a href="/2017/10/28/hello-world/" rel="next" title="Hello World">
-    上一篇：Hello World
+    <a href="/2017/11/09/Java-jdbc-simple/" rel="next" title="Java_jdbc_simple">
+    上一篇：Java_jdbc_simple
   </a>
 </p>
 
 
 
 <p class="red-link-context">
-    <a href="/2017/10/12/markdown-notes-basic/" rel="next" title="Markdown 相关语法">
-    下一篇：Markdown 相关语法
+    <a href="/2017/11/05/CppNotes_4/" rel="next" title="C++学习笔记（四）">
+    下一篇：C++学习笔记（四）
   </a>
 </p>
 
